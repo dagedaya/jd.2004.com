@@ -35,13 +35,13 @@ class AlipayController extends Controller{
         ],
         'mode' => 'dev', // optional,设置此参数，将进入沙箱模式
     ];
-    public function Alipay()
+    public function Alipay($order)
     {
-        $order = [
-            'out_trade_no' => time(),
-            'total_amount' => '0.1',
-            'subject' => 'test subject - 测试',
-        ];
+//        $order = [
+//            'out_trade_no' => time(),
+//            'total_amount' => '0.1',
+//            'subject' => 'test subject - 测试',
+//        ];
 
         $alipay = Pay::alipay($this->config)->web($order);
 

@@ -17,13 +17,14 @@ class CartController extends Controller
         }
         //取出购物车商品信息
         $list=CartModel::where('user_id',$user_id)->get();
+        $goods = [];
         foreach($list as $k=>$v){
             $goods[]=GoodsModel::find($v['goods_id'])->toArray();
         }
         $data=[
             'goods'=>$goods,
         ];
-        return view('index/cart',$data);
+        return view('order/cart',$data);
     }
     //加入购物车
     public function add(Request $request){

@@ -262,6 +262,7 @@ class loginController extends Controller
         $client = new Client();
         $response = $client->request('GET', $url, [
             'verify' => false,
+            //表信息
             'headers' => [
                 'Authorization' => "token $token"
             ]
@@ -276,7 +277,7 @@ class loginController extends Controller
     {
         //两表联查用户表和github用户表
         $res=githubModel::where('guid',$guid)
-            ->leftjoin('user','user.user_id','=','p_users_github.uid')
+//            ->leftjoin('user','user.user_id','=','p_users_github.uid')
             ->first();
         //将登录信息保存至session uid 与 token写入 seesion
         session(['user_id' =>$res['uid'],'user_name'=>$res['user_name']]);

@@ -94,7 +94,7 @@
 						<div class="fr shopcar">
 							<div class="show-shopcar" id="shopcar">
 								<span class="car"></span>
-								<a class="sui-btn btn-default btn-xlarge" href="{{url('index/cart')}}" target="_blank">
+								<a class="sui-btn btn-default btn-xlarge" href="{{url('order/cart')}}" target="_blank">
 									<span>我的购物车</span>
 									<i class="shopnum">0</i>
 								</a>

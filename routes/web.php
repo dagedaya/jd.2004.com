@@ -33,7 +33,9 @@ Route::get('login/active','index\LoginController@active');//激活用户
 Route::get('/login/sendEmail','index\LoginController@sendEmail');//邮箱
 Route::get('login/email','index\LoginController@email');//
 Route::get('login/yesemail/{email}','index\LoginController@yesemail');//发送验证成功之后注册成功
-Route::get('index/cart','index\CartController@cart');//购物车页面
+Route::get('order/cart','index\CartController@cart');//购物车页面
+Route::get('order/create','index\OrderController@create');//生成订单
+Route::get('order/commit','index\OrderController@commit');//提交订单页面
 
 Route::get('github/callback','index\LoginController@callback');
 Route::get('login/callback','index\LoginController@callback');//github登陆
