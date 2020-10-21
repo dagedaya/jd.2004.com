@@ -236,7 +236,7 @@
 						<span><em>已节省：</em><i>-¥20.00</i></span>
 					</div>
 					<div class="sumbtn">
-						<a class="sum-btn" href="{{url('order/create')}}" target="_blank">生成订单</a>
+						<a class="sum-btn" href="{{url('order/commit')}}" target="_blank">生成订单</a>
 					</div>
 				</div>
 			</div>

@@ -8,7 +8,7 @@ use App\IndexModel\CartModel;
 use App\IndexModel\OrderModel;
 use App\IndexModel\GoodsModel;
 use App\IndexModel\Orders_GoodsModle;
-class OrderController extends Controller
+class OrderController extends AlipayController
 {
     //提交订单页面
     public function commit(){
@@ -63,11 +63,15 @@ class OrderController extends Controller
                 'goods_price'=>$res['shop_price'],
             ];
             Orders_GoodsModle::insert($order_goods);
-            return redirect('order/commit');
         }
         //TODO 清空购物车
 
         //TODO 跳转到支付页面
-
+        $order = [
+            'out_trade_no' => $order_sn,//订单号
+            'total_amount' => $money,//总金额
+            'subject' => '购物车',
+        ];
+        return $this->Alipay($order);
     }
 }

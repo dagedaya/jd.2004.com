@@ -37,6 +37,9 @@ Route::get('order/cart','index\CartController@cart');//购物车页面
 Route::get('order/create','index\OrderController@create');//生成订单
 Route::get('order/commit','index\OrderController@commit');//提交订单页面
 
+Route::get('pay/paysuccess','index\AlipayController@AliPayReturn');//支付成功页面
+Route::get('pay/payfail','index\AlipayController@AliPayReturn');//支付失败页面
+
 Route::get('github/callback','index\LoginController@callback');
 Route::get('login/callback','index\LoginController@callback');//github登陆
 
@@ -45,8 +48,8 @@ Route::get('login/callback','index\LoginController@callback');//github登陆
 
 //支付宝支付处理路由
 Route::get('index/alipay','index\AlipayController@Alipay');  // 发起支付请求
-Route::any('index/notify','index\AlipayController@AliPayNotify'); //服务器异步通知页面路径
-Route::any('index/return','index\AlipayController@AliPayReturn');  //页面跳转同步通知页面路径
+Route::any('cart/sync','index\AlipayController@AliPayReturn'); //服务器异步通知页面路径
+Route::any('index/return','index\AlipayController@AliPayNotify');  //页面跳转同步通知页面路径
 
 
 

@@ -240,7 +240,7 @@
 			<div class="fc-receiverInfo">寄送至:北京市海淀区三环内 中关村软件园9号楼 收货人：某某某 159****3201</div>
 		</div>
 		<div class="submit">
-			<a class="sui-btn btn-danger btn-xlarge" href="{{url('order/pay')}}">提交订单</a>
+			<a class="sui-btn btn-danger btn-xlarge" href="{{url('order/create')}}">提交订单</a>
 		</div>
 	</div>
 	<!-- 底部栏位 -->
