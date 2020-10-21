@@ -1,0 +1,51 @@
+<?php
+
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
+|
+*/
+
+Route::get('/', function () {
+    return view('welcome');
+});
+Route::get('/','index\IndexController@index');//前台首页
+Route::get('login/register','index\LoginController@register');//注册视图
+Route::get('login/registerdo','index\LoginController@registerdo');//执行注册
+Route::get('login/login','index\LoginController@login');//登陆视图
+Route::get('login/logindo','index\LoginController@logindo');//执行登陆
+//Route::prefix('/')->middleware('login')->group(function() {
+    Route::get('cart/add','index\CartController@add');//加入购物车
+//});
+Route::get('/', 'index\IndexController@index');//首页
+Route::get('shop/list','index\ShopController@list');//商品列表页
+Route::get('shop/list','index\ShopController@list');//商品列表页
+Route::get('shop/detail','index\ShopController@detail');//商品详情页和缓存
+
+
+Route::get('login/exit','index\IndexController@exit');//退出
+Route::get('login/active','index\LoginController@active');//激活用户
+Route::get('/login/sendEmail','index\LoginController@sendEmail');//邮箱
+Route::get('login/email','index\LoginController@email');//
+Route::get('login/yesemail/{email}','index\LoginController@yesemail');//发送验证成功之后注册成功
+Route::get('index/cart','index\CartController@cart');//购物车页面
+
+Route::get('github/callback','index\LoginController@callback');
+Route::get('login/callback','index\LoginController@callback');//github登陆
+
+
+
+
+//支付宝支付处理路由
+Route::get('index/alipay','index\AlipayController@Alipay');  // 发起支付请求
+Route::any('index/notify','index\AlipayController@AliPayNotify'); //服务器异步通知页面路径
+Route::any('index/return','index\AlipayController@AliPayReturn');  //页面跳转同步通知页面路径
+
+
+
+

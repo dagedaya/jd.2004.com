@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="be352c45-a3b0-41e4-a19c-80885fb4dac9" name="jd.2004.com" url="http://120.27.251.209">
+        <fileTransfer rootFolder="/data/wwwroot/jd.2004.com" accessType="SFTP" host="120.27.251.209" port="22" sshConfigId="82f3a272-2874-41f8-a1c5-be6bc02cb84c" sshConfig="root@120.27.251.209:22 password">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
