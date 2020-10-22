@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redis;
 use App\IndexModel\GoodsModel;
-
+use App\IndexModel\CollectModel;
 class ShopController extends Controller
 {
     //商品列表页
@@ -39,11 +39,57 @@ class ShopController extends Controller
 //            'good'=>$goods,
 //        ];
         $goods = GoodsModel::find($goods_id)->toArray();
-
+        $user_id=session()->get('user_id');
+        //根据用户id查商品有没有被收藏
+        $collect=CollectModel::where('user_id',$user_id)->first();
+        if($collect){
+            $collect=1;
+        }else{
+            $collect=2;
+        }
         $data = [
             'g' => $goods,
+            'c' => $collect,
         ];
         return view('/shop/detail',$data);
+    }
+    //商品收藏
+    public function no_collect(Request $request){
+        $goods_id=$request->get('id');
+        if(empty($goods_id)){
+            echo "非法操作";
+        }
+        $user_id=session()->get('user_id');
+        if(empty($user_id)){
+            echo "请先登录";
+        }
+        $res=CollectModel::insert(['user_id'=>$user_id,'goods_id'=>$goods_id,'collect_time'=>time()]);
+        if($res){
+            echo "ok";
+        }else{
+            echo "no";
+        }
+    }
+    //取消收藏
+    public function off_collect(Request $request){
+        $goods_id=$request->get('id');
+        if(empty($goods_id)){
+            echo "非法操作";
+        }
+        $user_id=session()->get('user_id');
+        if(empty($user_id)){
+            echo "请先登录";
+        }
+        $where=[
+            ['user_id','=',$user_id],
+            ['goods_id','=',$goods_id],
+        ];
+        $res=CollectModel::where($where)->delete();
+        if($res){
+            echo "ok";
+        }else{
+            echo "no";
+        }
     }
 }
 

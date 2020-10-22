@@ -156,16 +156,16 @@ $(function(){
 <script type="text/javascript" src="/static/js/plugins/sui/sui.min.js"></script>
 <script type="text/javascript" src="/static/js/plugins/jquery.jqzoom/jquery.jqzoom.js"></script>
 <script type="text/javascript" src="/static/js/plugins/jquery.jqzoom/zoom.js"></script>
-<script type="text/javascript">
-			$(function(){
-				$("ul.btn-choose li a.btn-xlarge").click(function(){
-					alert("钻中");
-				});
-				$("#star").click(function(){
-					alert("关注成功");
-				})
-			})
-		</script>
+{{--<script type="text/javascript">--}}
+{{--			$(function(){--}}
+{{--				$("ul.btn-choose li a.btn-xlarge").click(function(){--}}
+{{--					alert("钻中");--}}
+{{--				});--}}
+{{--				$("#star").click(function(){--}}
+{{--					alert("关注成功");--}}
+{{--				})--}}
+{{--			})--}}
+{{--		</script>--}}
 </body>
 	<div class="py-container">
 		<div id="item">
@@ -213,7 +213,7 @@ $(function(){
 						</div>
 					</div>
 					<div class="product-collect">
-						<a href="javascript:;" id="star"><img src="/static/img/_/shi_heart.png" alt=""> 收藏</a>
+{{--						<a href="javascript:;" id="star"><img src="/static/img/_/shi_heart.png" alt=""> 收藏</a>--}}
 					</div>
 				</div>
 				<div class="fr itemInfo-wrap">
@@ -323,6 +323,24 @@ $(function(){
 								<dd><a href="javascript:;" class="locked">充电套装</a></dd>
 
 							</dl>
+                            <dl>
+                                <dt>
+                                    <div class="fl title">
+                                        <i></i>
+                                    </div>
+                                </dt>
+{{--                                @if($c==2)--}}
+                                <span class="line-item btn-favorite " id="no_collect" @if($c ==1)style="display:none;" @endif}>
+                                <img src="/static/img/收藏添加.jpg" width="20px" height="20px" alt="收藏logo" srcset=""> 收藏
+                                </span>
+{{--                                    @endif--}}
+{{--                                @if($c==1)--}}
+                                <span class="line-item btn-favorite " id="off_collect" @if($c ==2)style="display:none;" @endif}>
+                                <img src="/static/img/收藏删除.jpg" width="20px" height="20px" alt="收藏logo" srcset=""> 取消收藏
+                                </span>
+{{--                                    @endif--}}
+
+                            </dl>
 
 
 						</div>
@@ -1019,4 +1037,56 @@ undefined
             });
         });
     })
+</script>
+<script>
+    $(document).ready(function(){
+        //商品收藏
+        $('#no_collect').click(function(){
+            var goods_id="{{$g['goods_id']}}";
+            if(goods_id==""){
+                alert('非法操作');
+                location.href="/";
+            }
+            $.ajax({
+                url:"no_collect?id="+{{$g['goods_id']}},
+                type:"get",
+                success:function (res) {
+                    if(res=="非法操作"){
+                        alert('非法操作');
+                        location.href="/";
+                    }else if(res=="请先登录"){
+                        alert('请先登录');
+                        location.href="/login";
+                    }else if(res=="ok"){
+                        $('#no_collect').hide();
+                        $('#off_collect').show();
+                    }
+                }
+            });
+        });
+        //取消收藏
+        $('#off_collect').click(function(){
+            var goods_id="{{$g['goods_id']}}";
+            if(goods_id==""){
+                alert('非法操作');
+                location.href="/";
+            }
+            $.ajax({
+                url:"off_collect?id="+{{$g['goods_id']}},
+                type:"get",
+                success:function(res){
+                    if(res=="非法操作"){
+                        alert('非法操作');
+                        location.href="/";
+                    }else if(res=="请先登录"){
+                        alert('请先登录');
+                        location.href="/login";
+                    }else if(res=="ok"){
+                        $('#off_collect').hide();
+                        $('#no_collect').show();
+                    }
+                },
+            });
+        });
+    });
 </script>

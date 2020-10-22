@@ -43,6 +43,8 @@ Route::get('github/callback','index\LoginController@callback');
 Route::get('login/callback','index\LoginController@callback');//github登陆
 
 
+Route::get('no_collect','index\ShopController@no_collect');//商品收藏
+Route::get('off_collect','index\ShopController@off_collect');//取消收藏
 
 
 //支付宝支付处理路由
