@@ -15,7 +15,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::get('/','index\IndexController@index');//前台首页
-Route::get('login/register','index\LoginController@register');//注册视图
+Route::get('register','index\LoginController@register');//注册视图
 Route::get('login/registerdo','index\LoginController@registerdo');//执行注册
 Route::get('login','index\LoginController@login');//登陆视图
 Route::get('login/logindo','index\LoginController@logindo');//执行登陆
@@ -23,9 +23,8 @@ Route::get('login/logindo','index\LoginController@logindo');//执行登陆
     Route::get('cart/add','index\CartController@add');//加入购物车
 //});
 Route::get('/', 'index\IndexController@index');//首页
-Route::get('shop/list','index\ShopController@list');//商品列表页
-Route::get('shop/list','index\ShopController@list');//商品列表页
-Route::get('shop/detail','index\ShopController@detail');//商品详情页和缓存
+Route::get('list','index\ShopController@list');//商品列表页
+Route::get('detail','index\ShopController@detail');//商品详情页和缓存
 
 
 Route::get('login/exit','index\IndexController@exit');//退出
