@@ -1011,6 +1011,7 @@ undefined
             }).done(function(res){
                 if(res.erron==1){
                     alert(res.msg);
+                    window.location.href="/order/cart";
                 }else if(res.erron==400001){
                     alert(res.msg);
                     window.location.href = '/login/login';

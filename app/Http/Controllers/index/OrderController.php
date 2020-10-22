@@ -65,7 +65,7 @@ class OrderController extends AlipayController
             Orders_GoodsModle::insert($order_goods);
         }
         //TODO 清空购物车
-
+        CartModel::where('user_id',$user_id)->delete();
         //TODO 跳转到支付页面
         $order = [
             'out_trade_no' => $order_sn,//订单号

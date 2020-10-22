@@ -232,7 +232,6 @@ class loginController extends Controller
         }
         return redirect('/')->with('msg','登陆成功');
     }
-
     //根据code 换取 token
     protected function getAccessToken()
     {
@@ -250,7 +249,6 @@ class loginController extends Controller
         parse_str($response->getBody(), $str); // 返回字符串 、  	//access_token=59a8a45407f1c01126f98b5db256f078e54f6d18&scope=&token_type=bearer
         return $str['access_token'];
     }
-
     /*
      * 获取github个人信息
      * @param $token
@@ -269,7 +267,6 @@ class loginController extends Controller
         ]);
         return json_decode($response->getBody(), true);
     }
-
     /*
      * WEB登录逻辑
      */
@@ -277,7 +274,7 @@ class loginController extends Controller
     {
         //两表联查用户表和github用户表
         $res=githubModel::where('guid',$guid)
-//            ->leftjoin('user','user.user_id','=','p_users_github.uid')
+            ->leftjoin('user','user.user_id','=','p_users_github.uid')
             ->first();
         //将登录信息保存至session uid 与 token写入 seesion
         session(['user_id' =>$res['uid'],'user_name'=>$res['user_name']]);
