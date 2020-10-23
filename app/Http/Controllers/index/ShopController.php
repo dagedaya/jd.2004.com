@@ -57,28 +57,28 @@ class ShopController extends Controller
     public function no_collect(Request $request){
         $goods_id=$request->get('id');
         if(empty($goods_id)){
-            echo "非法操作";
+            echo "非法操作";die;
         }
         $user_id=session()->get('user_id');
         if(empty($user_id)){
-            echo "请先登录";
+            echo "请先登录";die;
         }
         $res=CollectModel::insert(['user_id'=>$user_id,'goods_id'=>$goods_id,'collect_time'=>time()]);
         if($res){
-            echo "ok";
+            echo "ok";die;
         }else{
-            echo "no";
+            echo "no";die;
         }
     }
     //取消收藏
     public function off_collect(Request $request){
         $goods_id=$request->get('id');
         if(empty($goods_id)){
-            echo "非法操作";
+            echo "非法操作";die;
         }
         $user_id=session()->get('user_id');
         if(empty($user_id)){
-            echo "请先登录";
+            echo "请先登录";die;
         }
         $where=[
             ['user_id','=',$user_id],
@@ -86,9 +86,9 @@ class ShopController extends Controller
         ];
         $res=CollectModel::where($where)->delete();
         if($res){
-            echo "ok";
+            echo "ok";die;
         }else{
-            echo "no";
+            echo "no";die;
         }
     }
 }
