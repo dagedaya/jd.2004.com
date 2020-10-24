@@ -226,6 +226,7 @@ class loginController extends Controller
                 'add_time' => time()
             ];
             $guid = GithubModel::insertGetId($info);        //插入新纪录
+            $this->webLogin($git_user['id']);//$u->uid
             if ($guid) {
                 return redirect('/')->with('msg', '登陆成功');
             }

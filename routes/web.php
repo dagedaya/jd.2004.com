@@ -46,6 +46,8 @@ Route::get('login/callback','index\LoginController@callback');//github登陆
 Route::get('no_collect','index\ShopController@no_collect');//商品收藏
 Route::get('off_collect','index\ShopController@off_collect');//取消收藏
 
+Route::get('search','index\IndexController@search');//搜索
+
 
 //支付宝支付处理路由
 Route::get('index/alipay','index\AlipayController@Alipay');  // 发起支付请求

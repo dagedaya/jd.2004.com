@@ -8,7 +8,15 @@
                 <div class="shortcut">
                     <ul class="fl">
                         <li class="f-item">品优购欢迎您！</li>
-                        <li class="f-item">请<a href="login.html" target="_blank">登录</a>　<span><a href="register.html" target="_blank">免费注册</a></span></li>
+                        <li class="f-item">
+                            @if(empty(session('user_id')))
+                                请<a href="{{url('/login')}}" target="_blank">登录</a>
+                                <span><a href="/register" target="_blank">免费注册</a></span>
+                            @else
+                                &nbsp;&nbsp;<span>欢迎<a href=""><a style="color:red;">{{session('user_name')}}</a>登陆</a></span>&nbsp;
+                                &nbsp;<span><a href="{{url('login/exit')}}">退出</a></span>
+                            @endif
+                        </li>
                     </ul>
                     <ul class="fr">
                         <li class="f-item">我的订单</li>
@@ -46,11 +54,11 @@
                     </div>
                     <div class="yui3-u Center searchArea">
                         <div class="search">
-                            <form action="" class="sui-form form-inline">
+                            <form action="{{url('/search')}}" class="sui-form form-inline">
                                 <!--searchAutoComplete-->
                                 <div class="input-append">
-                                    <input type="text" id="autocomplete" type="text" class="input-error input-xxlarge" />
-                                    <button class="sui-btn btn-xlarge btn-danger" type="button">搜索</button>
+                                    <input type="text" value="<?php echo empty($_GET['goods_name'])?"":$_GET['goods_name'];?>" id="autocomplete" type="text" class="input-error input-xxlarge" name="goods_name">
+                                    <button class="sui-btn btn-xlarge btn-danger" type="submit">搜索</button>
                                 </div>
                             </form>
                         </div>

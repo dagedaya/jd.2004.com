@@ -4,6 +4,9 @@ namespace App\Http\Controllers\index;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\IndexModel\GoodsModel;
+use Monolog\Processor\GitProcessor;
+use Illuminate\Pagination\Paginator;
 
 class IndexController extends Controller
 {
@@ -18,5 +21,21 @@ class IndexController extends Controller
         if(empty($user_id)){
             return redirect('login/login')->with('msg','退出完成');
         }
+    }
+    //首页搜索
+    public function search(Request $request){
+        $goods_name=$request->goods_name;
+        $search=GoodsModel::where('goods_name','like',"%".$goods_name."%")->paginate(10);
+        if(is_object($search)){
+            $search->toArray();
+        }
+        //分页保留条件
+        $page = isset($page)?$request['page']:1;
+        $taskList = $search->appends(array(
+            'goods_name'=>$goods_name,
+            'page'=>$page
+            //add more element if you have more search terms
+        ));
+        return view('index/search',['search'=>$search]);
     }
 }

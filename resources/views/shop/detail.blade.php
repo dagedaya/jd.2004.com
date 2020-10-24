@@ -617,6 +617,12 @@ $(function(){
 							<div id="five" class="tab-pane">
 								<p>手机社区</p>
 							</div>
+                            <div>
+                                <form action="{{url('index/comment')}}" method="post">
+                                    <textarea name="comment" cols="60" rows="5"></textarea><br>
+                                    <input type="submit" value="发布">
+                                </form>
+                            </div>
 						</div>
 					</div>
 				</div>
