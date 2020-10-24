@@ -48,6 +48,9 @@ Route::get('off_collect','index\ShopController@off_collect');//取消收藏
 
 Route::get('search','index\IndexController@search');//搜索
 
+Route::get('shop/comment','index\CartController@comment');//评论
+Route::get('shop/comment1','index\CartController@comment1');//展示评论
+
 
 //支付宝支付处理路由
 Route::get('index/alipay','index\AlipayController@Alipay');  // 发起支付请求

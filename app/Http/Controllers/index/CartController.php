@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\IndexModel\CartModel;
 use App\IndexModel\GoodsModel;
+use App\IndexModel\CommentModel;
 
 class CartController extends Controller
 {
@@ -64,7 +65,47 @@ class CartController extends Controller
         }
     }
     //评论
-    public function comment(){
-        
+    public function comment(Request $request){
+        $goods_id=$request->goods_id;
+        $comment_content=$request->comment_content;
+        $user_id=session()->get('user_id');
+        if(empty($user_id)){
+            $data=[
+                'error'=>400,
+                'msg'=>"请先登录",
+            ];
+            return json_encode($data,true);
+        }
+
+        //入库
+        $data=[
+            "goods_id"=>$goods_id,
+            "user_id"=>$user_id,
+            "comment_content"=>$comment_content,
+            "comment_time"=>time(),
+        ];
+        $res=CommentModel::insert($data);
+        if($res) {
+            $data = [
+                'error' => 500,
+                'msg' => "评论成功",
+            ];
+            return json_encode($data,true);
+        }else{
+            $data=[
+                'error'=>600,
+                'msg'=>"评论失败",
+            ];
+            return json_encode($data,true);
+        }
+    }
+    //查询评论表
+    public function comment1(Request $request){
+        $user_id=session()->get('user_id');
+        $res=CommentModel::where('user_id',$user_id)->get()->toArray();
+        if(is_object($res)){
+            $res->toArray();
+        }
+        return view('shop/detail',['res'=>$res]);
     }
 }

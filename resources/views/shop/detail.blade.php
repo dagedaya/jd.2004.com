@@ -570,7 +570,7 @@ $(function(){
 								</a>
 							</li>
 							<li>
-								<a href="#four" data-toggle="tab">
+								<a href="#four" data-toggle="tab" id="">
 									<span>商品评价</span>
 								</a>
 							</li>
@@ -613,16 +613,17 @@ $(function(){
 							</div>
 							<div id="four" class="tab-pane">
 								<p>商品评价</p>
+{{--                                @foreach($res as $k=>$v)--}}
+{{--                                <div>--}}
+{{--                                    内容：<tr>hsh</tr><hr>--}}
+{{--                                </div>--}}
+{{--                                @endforeach--}}
+                                    <textarea name="comment" cols="60" rows="5" id="comment_content"></textarea><br>
+                                    <input type="submit" id="evaluate" value="发布">
 							</div>
 							<div id="five" class="tab-pane">
 								<p>手机社区</p>
 							</div>
-                            <div>
-                                <form action="{{url('index/comment')}}" method="post">
-                                    <textarea name="comment" cols="60" rows="5"></textarea><br>
-                                    <input type="submit" value="发布">
-                                </form>
-                            </div>
 						</div>
 					</div>
 				</div>
@@ -1092,6 +1093,35 @@ undefined
                         $('#no_collect').show();
                     }
                 },
+            });
+        });
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        //评价
+        $('#evaluate').click(function(){
+            var _this=$(this);
+            var _evaluate=$('#comment_content');//文本域内容
+            var goods_id={{$g['goods_id']}};
+            if(_evaluate.val()==""){
+                alert('评价不能为空哦！');
+            }
+            $.ajax({
+                url:"shop/comment",
+                data:'goods_id='+goods_id+'&comment_content='+_evaluate.val(),
+                dataType:'json',
+                type:"get",
+                success:function (res) {
+                    if(res.error==400){
+                        alert(res.msg);
+                        location.href="login";
+                    }else if(res.error==500){
+                        alert(res.msg);
+                    }else{
+                        alert(res.msg);
+                    }
+                }
             });
         });
     });
