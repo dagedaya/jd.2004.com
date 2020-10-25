@@ -613,11 +613,11 @@ $(function(){
 							</div>
 							<div id="four" class="tab-pane">
 								<p>商品评价</p>
-{{--                                @foreach($res as $k=>$v)--}}
-{{--                                <div>--}}
-{{--                                    内容：<tr>hsh</tr><hr>--}}
-{{--                                </div>--}}
-{{--                                @endforeach--}}
+                                @foreach($res as $k=>$v)
+                                <div>
+                                    内容：<tr>hsh</tr><hr>
+                                </div>
+                                @endforeach
                                     <textarea name="comment" cols="60" rows="5" id="comment_content"></textarea><br>
                                     <input type="submit" id="evaluate" value="发布">
 							</div>
