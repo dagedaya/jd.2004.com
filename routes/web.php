@@ -51,6 +51,8 @@ Route::get('search','index\IndexController@search');//搜索
 Route::get('shop/comment','index\ShopController@comment');//评论
 Route::get('shop/comment1','index\ShopController@comment1');//展示评论
 
+Route::get('prize/index','index\PrizeController@index');//抽奖视图
+Route::get('prize/add','index\PrizeController@add');//开始抽奖
 
 //支付宝支付处理路由
 Route::get('index/alipay','index\AlipayController@Alipay');  // 发起支付请求
