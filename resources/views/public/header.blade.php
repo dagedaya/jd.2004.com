@@ -14,7 +14,7 @@
                                 <span><a href="/register" target="_blank">免费注册</a></span>
                             @else
                                 &nbsp;&nbsp;<span>欢迎<a href=""><a style="color:red;">{{session('user_name')}}</a>登陆</a></span>&nbsp;
-                                &nbsp;<span><a href="{{url('login/exit')}}">退出</a></span>
+                                &nbsp;<span><a href="{{url('/exit')}}">退出</a></span>
                             @endif
                         </li>
                     </ul>

@@ -22,11 +22,14 @@
                 url:"/prize/add",
                 dataType:'json',
                 success:function (res) {
-                    if(res==404){
-                        alert('请先登录');
+                    if(res.error==400003){
+                        alert(res.msg);
                         location.href="/login";
-                    }else
+                    }else if(res.error==300008){
+                        alert(res.msg);
+                    }else{
                         alert(res.data.prize);
+                    }
                 }
             });
         });
