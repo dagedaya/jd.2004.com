@@ -108,10 +108,10 @@ class loginController extends Controller
         $data = $request->all();
         //验证非空
         if (empty($data['user_name'])) {
-            return redirect('login/login')->with('msg', '账号不能为空');
+            return redirect('/login')->with('msg', '账号不能为空');
         }
         if (empty($data['user_pwd'])) {
-            return redirect('login/login')->with('msg', '密码不能为空');
+            return redirect('/login')->with('msg', '密码不能为空');
         }
         //手机号或者邮箱或者用户名登陆(一条中的所有数据)
         $res = LoginModels::where(['user_name' => $data['user_name']])
@@ -119,20 +119,20 @@ class loginController extends Controller
             ->orwhere(['user_tel' => $data['user_name']])
             ->first();
         if (empty($res)) {
-            return redirect('login/login')->with('msg', '账号不存在');
+            return redirect('/login')->with('msg', '账号不存在');
         }
         //检测用户是已经被锁定
         $key="login:count".$res['user_id'];
         //剩余时间
         $login_time=ceil(Redis::TTL('login_time:'.$key)/60);
         if(!empty($login_time)){
-            return redirect('login/login')->with('msg','已被锁定，剩余'.$login_time."分钟");
+            return redirect('/login')->with('msg','已被锁定，剩余'.$login_time."分钟");
         }
         $count=Redis::get($key);
         if($count>=4){
             //设置过期的时间
             Redis::setex('login_time:'.$key,3600,Redis::get($key));
-            return redirect('login/login')->with('msg','错误达到了五次,已被锁定一小时');
+            return redirect('/login')->with('msg','错误达到了五次,已被锁定一小时');
         }
         if (password_verify($data['user_pwd'], $res['user_pwd'])) {
             //将用户登录的错误次数设置为null
@@ -164,7 +164,7 @@ class loginController extends Controller
             }
             //设置错误的次数
             $num=Redis::incr($key);
-            return redirect('login/login')->with('msg', '错误次数为'.$num);
+            return redirect('/login')->with('msg', '错误次数为'.$num);
         }
     }
     public function sendEmail()
