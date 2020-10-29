@@ -280,5 +280,8 @@ class loginController extends Controller
         //将登录信息保存至session uid 与 token写入 seesion
         session(['user_id' =>$res['uid'],'user_name'=>$res['user_name']]);
     }
+    public function a(){
+
+    }
 }
 
