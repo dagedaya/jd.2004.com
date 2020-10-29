@@ -45,7 +45,7 @@
                                     *{{session('msg')}}
                                 </div>
                             @endif
-							<form class="sui-form" action="{{url('login/logindo')}}">
+							<form class="sui-form" method="post" action="{{url('login/logindo')}}">
 								<div class="input-prepend"><span class="add-on loginname"></span>
 									<input id="prependedInput" type="text" name="user_name" placeholder="邮箱/用户名/手机号" class="span2 input-xfat">
 								</div>

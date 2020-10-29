@@ -18,7 +18,7 @@ Route::get('/','index\IndexController@index');//前台首页
 Route::get('register','index\LoginController@register');//注册视图
 Route::get('login/registerdo','index\LoginController@registerdo');//执行注册
 Route::get('login','index\LoginController@login');//登陆视图
-Route::get('login/logindo','index\LoginController@logindo');//执行登陆
+Route::post('login/logindo','index\LoginController@logindo');//执行登陆
 //Route::prefix('/')->middleware('login')->group(function() {
     Route::get('cart/add','index\CartController@add');//加入购物车
 //});

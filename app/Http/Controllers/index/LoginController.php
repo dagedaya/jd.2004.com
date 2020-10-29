@@ -106,6 +106,7 @@ class loginController extends Controller
         //登陆的ip
         $last_ip = $_SERVER['REMOTE_ADDR'];
         $data = $request->all();
+//        dd($data);
         //验证非空
         if (empty($data['user_name'])) {
             return redirect('/login')->with('msg', '账号不能为空');
