@@ -10,6 +10,11 @@
 <body>
     <h1>电影购买系统</h1>
     <form action="/test/movieadd">
+{{--        @if(!empty(session('msg')))--}}
+{{--            <div class="alert alert-msg" role="alert" style="color:red;">--}}
+{{--                *{{session('msg')}}--}}
+{{--            </div>--}}
+{{--        @endif--}}
         <table border="1">
                 <input type="hidden" name="movie_id" value="{{$_GET['movie_id']}}">
                     @csrf
@@ -46,5 +51,19 @@
         });
     });
 </script>
+<?php
+use Illuminate\Support\Facades\Redis;
+        //开场时间倒计时
+        $key="time_count".$_GET['movie_id'];
+        //剩余时间
+        $time_count=ceil(Redis::TTL('time_count:'.$key)/60);
+        if(!empty($time_count)){
+            echo '距离开场还有'.$time_count."分钟";
+        }else{
+            echo "<script>alert('时间已经到了，已经不能购买了');location.href='/';</script>";
+        }
+        //设置过期时间
+        Redis::setex('time_count:'.$key,300,Redis::get($key));
+?>
 
 

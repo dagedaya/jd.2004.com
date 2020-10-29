@@ -24,11 +24,16 @@ class ShopController extends Controller
         $user_id=session()->get('user_id');
         //用户浏览历史记录
         if(!empty($user_id)){
+
+        }
+        //用户浏览历史记录
+        if(!empty($user_id)){
             $data=[
                 'goods_id'=>$goods_id,
                 'user_id'=>$user_id,
                 'history_time'=>time(),
             ];
+            //短时间内是否刷新
             $history=HistoryModel::where([['user_id','$user_id'],['goods_id','=',$user_id]])->orderBy('history_time','desc')->select('history_time','history_id')->first();
         }
         if(is_object($history)){
@@ -60,11 +65,14 @@ class ShopController extends Controller
 //            //存入缓存
 //            Redis::hMset($key,$goods);
 //            echo "数据存入redis中";exit;
+//
 //        }
 //        echo '<pre>';print_r($goods);echo '</pre>';
 //        $data=[
 //            'good'=>$goods,
 //        ];
+        //浏览排行榜
+        GoodsModel::where('goods_id',$goods_id)->increment('click_count');
         $goods = GoodsModel::find($goods_id)->toArray();
         $user_id = session()->get('user_id');
         //根据用户id查商品有没有被收藏
@@ -90,6 +98,7 @@ class ShopController extends Controller
     public function no_collect(Request $request)
     {
         $goods_id = $request->get('id');
+        //收藏排行榜
         if (empty($goods_id)) {
             echo "非法操作";
             die;
@@ -101,6 +110,8 @@ class ShopController extends Controller
         }
         $res = CollectModel::insert(['user_id' => $user_id, 'goods_id' => $goods_id, 'collect_time' => time()]);
         if ($res) {
+            //收藏排行
+            GoodsModel::where('goods_id',$goods_id)->increment('fav_count');
             echo "ok";
             die;
         } else {

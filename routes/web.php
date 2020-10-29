@@ -27,7 +27,7 @@ Route::get('list','index\ShopController@list');//商品列表页
 Route::get('detail','index\ShopController@detail');//商品详情页和缓存
 
 
-Route::get('login/exit','index\IndexController@exit');//退出
+Route::get('/exit','index\IndexController@exit');//退出
 Route::get('login/active','index\LoginController@active');//激活用户
 Route::get('/login/sendEmail','index\LoginController@sendEmail');//邮箱
 Route::get('login/email','index\LoginController@email');//
@@ -58,6 +58,9 @@ Route::get('prize/ceshi','index\PrizeController@ceshi');//测试
 //电影购买系统
 Route::get('test/movie','index\TestController@movie');//视图
 Route::get('test/movieadd','index\TestController@movieadd');
+
+//递归（斐波那契数列第n项）
+Route::get('test/fab','index\TestController@fab');
 
 //支付宝支付处理路由
 Route::get('index/alipay','index\AlipayController@Alipay');  // 发起支付请求
