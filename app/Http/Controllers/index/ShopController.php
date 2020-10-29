@@ -75,7 +75,7 @@ class ShopController extends Controller
         GoodsModel::where('goods_id',$goods_id)->increment('click_count');
         $goods = GoodsModel::find($goods_id);
         if(is_object($goods)){
-            $goods->toArray();
+            $goods=$goods->toArray();
         }
         $user_id = session()->get('user_id');
         //根据用户id查商品有没有被收藏
