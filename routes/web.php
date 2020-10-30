@@ -14,6 +14,10 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('test/php','index\TestController@php');//phpinfo
+
+
 Route::get('/','index\IndexController@index');//前台首页
 Route::get('register','index\LoginController@register');//注册视图
 Route::get('login/registerdo','index\LoginController@registerdo');//执行注册
@@ -61,6 +65,9 @@ Route::get('test/movieadd','index\TestController@movieadd');
 
 //递归（斐波那契数列第n项）
 Route::get('test/fab','index\TestController@fab');
+
+Route::get('/center','index\CenterController@center');//个人中心视图页面
+Route::get('/btn','index\CenterController@btn');//签到
 
 //支付宝支付处理路由
 Route::get('index/alipay','index\AlipayController@Alipay');  // 发起支付请求

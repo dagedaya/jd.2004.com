@@ -95,4 +95,8 @@ class TestController extends Controller
         }
         echo Fibonacci(2);
     }
+    //phpinfo
+    public function php(){
+        phpinfo();
+    }
 }

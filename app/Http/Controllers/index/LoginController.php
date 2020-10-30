@@ -148,6 +148,9 @@ class loginController extends Controller
 //            }
             //存session
             session(['user_id'=>$res['user_id'],'user_name'=>$res['user_name'],'user_email'=>$res['user_email'],'user_tel'=>$res['user_tel']]);
+            if(!empty(session('user_id'))){
+                return redirect('/center');
+            }
             //如果密码正确了那就把登陆的ip、最后登陆的时间、登陆的次数存到数据库
             $loginInfo=['last_ip'=>$last_ip,'last_login'=>time(),'login_count'=>$res['login_count']+1];
             LoginModels::where('user_id',$res['user_id'])->update($loginInfo);
