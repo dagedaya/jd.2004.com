@@ -5,9 +5,9 @@ namespace App\Http\Controllers\index;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redis;
-use App\Model\WxUserModel;
+use App\IndexModel\WxUserModel;
 use GuzzleHttp\Client;
-use App\Model\MediaModel;
+use App\IndexModel\MediaModel;
 use Log;
 use Illuminate\Support\Str;
 class WxController extends Controller
