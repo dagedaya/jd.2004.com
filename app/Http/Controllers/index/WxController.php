@@ -199,6 +199,7 @@ class WxController extends Controller
                             <Content><![CDATA[%s]]></Content>
                             </xml>";
         $info = sprintf($template, $toUser, $fromUser, time(), $msgType, $content);
+        echo $this->create_menu();
         return $info;
     }
     //取关
@@ -425,8 +426,8 @@ class WxController extends Controller
             'button'=>[
                 [
                     'type'=>'view',
-                    'name'=>"商城",
-                    'url'=>'http://2004dageda.wwwhb.wenao.top/'.'/web_auth',
+                    'name'=>"商城1",
+                    'url'=>'http://2004dageda.wwwhb.wenao.top/web_auth',
                 ],
                 [
                     'type'=>'click',
@@ -458,7 +459,7 @@ class WxController extends Controller
             'body'=>json_encode($array,JSON_UNESCAPED_UNICODE),
         ]);
         $data=$response->getBody();
-        echo $data;
+        return $data;
     }
     /**
      * 微信网页授权
