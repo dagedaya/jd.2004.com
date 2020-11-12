@@ -226,108 +226,110 @@
 							<div class="carousel-inner">
 								<div class="active item">
 									<ul>
+                                        @foreach($res as $k=>$v)
 										<li>
 											<img src="/static/img/like1.png" />
 											<div class="intro">
-												<i>Apple苹果iPhone 6s (A1699)</i>
+												<i>{{$v['goods_name']}}</i>
 											</div>
 											<div class="money">
-												<span>$29.00</span>
+												<span>{{$v['shop_price']}}</span>
 											</div>
 											<div class="incar">
 												<a href="#" class="sui-btn btn-bordered btn-xlarge btn-default"><i class="car"></i><span class="cartxt">加入购物车</span></a>
 											</div>
 										</li>
-										<li>
-											<img src="/static/img/like2.png" />
-											<div class="intro">
-												<i>Apple苹果iPhone 6s (A1699)</i>
-											</div>
-											<div class="money">
-												<span>$29.00</span>
-											</div>
-											<div class="incar">
-												<a href="#" class="sui-btn btn-bordered btn-xlarge btn-default"><i class="car"></i><span class="cartxt">加入购物车</span></a>
-											</div>
-										</li>
-										<li>
-											<img src="/static/img/like3.png" />
-											<div class="intro">
-												<i>Apple苹果iPhone 6s (A1699)</i>
-											</div>
-											<div class="money">
-												<span>$29.00</span>
-											</div>
-											<div class="incar">
-												<a href="#" class="sui-btn btn-bordered btn-xlarge btn-default"><i class="car"></i><span class="cartxt">加入购物车</span></a>
-											</div>
-										</li>
-										<li>
-											<img src="/static/img/like4.png" />
-											<div class="intro">
-												<i>Apple苹果iPhone 6s (A1699)</i>
-											</div>
-											<div class="money">
-												<span>$29.00</span>
-											</div>
-											<div class="incar">
-												<a href="#" class="sui-btn btn-bordered btn-xlarge btn-default"><i class="car"></i><span class="cartxt">加入购物车</span></a>
-											</div>
-										</li>
-									</ul>
-								</div>
-								<div class="item">
-									<ul>
-										<li>
-											<img src="/static/img/like1.png" />
-											<div class="intro">
-												<i>Apple苹果iPhone 6s (A1699)</i>
-											</div>
-											<div class="money">
-												<span>$29.00</span>
-											</div>
-											<div class="incar">
-												<a href="#" class="sui-btn btn-bordered btn-xlarge btn-default"><i class="car"></i><span class="cartxt">加入购物车</span></a>
-											</div>
-										</li>
-										<li>
-											<img src="/static/img/like2.png" />
-											<div class="intro">
-												<i>Apple苹果iPhone 6s (A1699)</i>
-											</div>
-											<div class="money">
-												<span>$29.00</span>
-											</div>
-											<div class="incar">
-												<a href="#" class="sui-btn btn-bordered btn-xlarge btn-default"><i class="car"></i><span class="cartxt">加入购物车</span></a>
-											</div>
-										</li>
-										<li>
-											<img src="/static/img/like3.png" />
-											<div class="intro">
-												<i>Apple苹果iPhone 6s (A1699)</i>
-											</div>
-											<div class="money">
-												<span>$29.00</span>
-											</div>
-											<div class="incar">
-												<a href="#" class="sui-btn btn-bordered btn-xlarge btn-default"><i class="car"></i><span class="cartxt">加入购物车</span></a>
-											</div>
-										</li>
-										<li>
-											<img src="/static/img/like4.png" />
-											<div class="intro">
-												<i>Apple苹果iPhone 6s (A1699)</i>
-											</div>
-											<div class="money">
-												<span>$29.00</span>
-											</div>
-											<div class="incar">
-												<a href="#" class="sui-btn btn-bordered btn-xlarge btn-default"><i class="car"></i><span class="cartxt">加入购物车</span></a>
-											</div>
-										</li>
-									</ul>
-								</div>
+                                        @endforeach
+{{--										<li>--}}
+{{--											<img src="/static/img/like2.png" />--}}
+{{--											<div class="intro">--}}
+{{--												<i>Apple苹果iPhone 6s (A1699)</i>--}}
+{{--											</div>--}}
+{{--											<div class="money">--}}
+{{--												<span>$29.00</span>--}}
+{{--											</div>--}}
+{{--											<div class="incar">--}}
+{{--												<a href="#" class="sui-btn btn-bordered btn-xlarge btn-default"><i class="car"></i><span class="cartxt">加入购物车</span></a>--}}
+{{--											</div>--}}
+{{--										</li>--}}
+{{--										<li>--}}
+{{--											<img src="/static/img/like3.png" />--}}
+{{--											<div class="intro">--}}
+{{--												<i>Apple苹果iPhone 6s (A1699)</i>--}}
+{{--											</div>--}}
+{{--											<div class="money">--}}
+{{--												<span>$29.00</span>--}}
+{{--											</div>--}}
+{{--											<div class="incar">--}}
+{{--												<a href="#" class="sui-btn btn-bordered btn-xlarge btn-default"><i class="car"></i><span class="cartxt">加入购物车</span></a>--}}
+{{--											</div>--}}
+{{--										</li>--}}
+{{--										<li>--}}
+{{--											<img src="/static/img/like4.png" />--}}
+{{--											<div class="intro">--}}
+{{--												<i>Apple苹果iPhone 6s (A1699)</i>--}}
+{{--											</div>--}}
+{{--											<div class="money">--}}
+{{--												<span>$29.00</span>--}}
+{{--											</div>--}}
+{{--											<div class="incar">--}}
+{{--												<a href="#" class="sui-btn btn-bordered btn-xlarge btn-default"><i class="car"></i><span class="cartxt">加入购物车</span></a>--}}
+{{--											</div>--}}
+{{--										</li>--}}
+{{--									</ul>--}}
+{{--								</div>--}}
+{{--								<div class="item">--}}
+{{--									<ul>--}}
+{{--										<li>--}}
+{{--											<img src="/static/img/like1.png" />--}}
+{{--											<div class="intro">--}}
+{{--												<i>Apple苹果iPhone 6s (A1699)</i>--}}
+{{--											</div>--}}
+{{--											<div class="money">--}}
+{{--												<span>$29.00</span>--}}
+{{--											</div>--}}
+{{--											<div class="incar">--}}
+{{--												<a href="#" class="sui-btn btn-bordered btn-xlarge btn-default"><i class="car"></i><span class="cartxt">加入购物车</span></a>--}}
+{{--											</div>--}}
+{{--										</li>--}}
+{{--										<li>--}}
+{{--											<img src="/static/img/like2.png" />--}}
+{{--											<div class="intro">--}}
+{{--												<i>Apple苹果iPhone 6s (A1699)</i>--}}
+{{--											</div>--}}
+{{--											<div class="money">--}}
+{{--												<span>$29.00</span>--}}
+{{--											</div>--}}
+{{--											<div class="incar">--}}
+{{--												<a href="#" class="sui-btn btn-bordered btn-xlarge btn-default"><i class="car"></i><span class="cartxt">加入购物车</span></a>--}}
+{{--											</div>--}}
+{{--										</li>--}}
+{{--										<li>--}}
+{{--											<img src="/static/img/like3.png" />--}}
+{{--											<div class="intro">--}}
+{{--												<i>Apple苹果iPhone 6s (A1699)</i>--}}
+{{--											</div>--}}
+{{--											<div class="money">--}}
+{{--												<span>$29.00</span>--}}
+{{--											</div>--}}
+{{--											<div class="incar">--}}
+{{--												<a href="#" class="sui-btn btn-bordered btn-xlarge btn-default"><i class="car"></i><span class="cartxt">加入购物车</span></a>--}}
+{{--											</div>--}}
+{{--										</li>--}}
+{{--										<li>--}}
+{{--											<img src="/static/img/like4.png" />--}}
+{{--											<div class="intro">--}}
+{{--												<i>Apple苹果iPhone 6s (A1699)</i>--}}
+{{--											</div>--}}
+{{--											<div class="money">--}}
+{{--												<span>$29.00</span>--}}
+{{--											</div>--}}
+{{--											<div class="incar">--}}
+{{--												<a href="#" class="sui-btn btn-bordered btn-xlarge btn-default"><i class="car"></i><span class="cartxt">加入购物车</span></a>--}}
+{{--											</div>--}}
+{{--										</li>--}}
+{{--									</ul>--}}
+{{--								</div>--}}
 							</div>
 							<a href="#myCarousel" data-slide="prev" class="carousel-control left">‹</a>
 							<a href="#myCarousel" data-slide="next" class="carousel-control right">›</a>

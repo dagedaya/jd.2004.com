@@ -35,9 +35,8 @@ class ShopController extends Controller
             ];
             //短时间内是否刷新
             $history=HistoryModel::where([['user_id','$user_id'],['goods_id','=',$user_id]])->orderBy('history_time','desc')->select('history_time','history_id')->first();
-        }
         if(is_object($history)){
-            $history->toArray();
+            $history=$history->toArray();
         }
         if(!empty($history)){
             if(time()-60>$history['history_time']){
@@ -47,6 +46,7 @@ class ShopController extends Controller
             }
         }else{
             $res=HistoryModel::insert($data);
+        }
         }
 //        $id=$request->get('id');
 //        $key="h:goods:".$id;
@@ -132,10 +132,10 @@ class ShopController extends Controller
             die;
         }
         $user_id = session()->get('user_id');
-        if (empty($user_id)) {
-            echo "请先登录";
-            die;
-        }
+//        if (empty($user_id)) {
+//            echo "请先登录";
+//            die;
+//        }
         $where = [
             ['user_id', '=', $user_id],
             ['goods_id', '=', $goods_id],
@@ -158,7 +158,7 @@ class ShopController extends Controller
         $user_id = session()->get('user_id');
         if (empty($user_id)) {
             $data = [
-                'error' => 400,
+                'error' => 400003,
                 'msg' => "请先登录",
             ];
             return json_encode($data, true);

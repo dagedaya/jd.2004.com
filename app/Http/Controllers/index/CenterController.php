@@ -10,6 +10,10 @@ class CenterController extends Controller
 {
     //用户中心视图
     public function center(){
+//        $user_id=session()->get('user_id');
+//        if(empty($user_id)){
+//            return redirect('/login')->with('msg','请先登录');
+//        }
         return view('center/center');
     }
     //签到

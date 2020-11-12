@@ -68,10 +68,9 @@
                                 <li class="f-item">亿元优惠</li>
                                 <li class="f-item">9.9元团购</li>
                                 <li class="f-item">每满99减30</li>
-                                <li class="f-item">亿元优惠</li>
                                 <li class="f-item">9.9元团购</li>
                                 <li class="f-item">办公用品</li>
-
+                                <li class="f-item"><a href="/new_coupon">新人优惠劵</a></li>
                             </ul>
                         </div>
                     </div>

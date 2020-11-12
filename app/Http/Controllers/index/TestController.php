@@ -93,10 +93,23 @@ class TestController extends Controller
                 return Fibonacci($n - 2) + Fibonacci($n - 1);
             }
         }
-        echo Fibonacci(2);
+        echo Fibonacci(6);
     }
     //phpinfo
     public function php(){
         phpinfo();
+    }
+    //练习
+    public function lianxi(){
+        echo date('Y-m-d H:i:s',strtotime('+1day'));
+    }
+    //时间
+    public function expire(){
+        //自增
+//        $key=0;
+//        echo Redis::incr($key);
+        //用于设置 key 的过期时间
+        $key=2;
+        echo Redis::expire($key,60);
     }
 }

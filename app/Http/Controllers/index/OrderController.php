@@ -23,9 +23,9 @@ class OrderController extends AlipayController
         if(empty($user_id)){
             return redirect('login/login')->with('msg','请先登录');
         }
-        //TODO 获取购物车中的商品（根据当前的用户id）
+        // 获取购物车中的商品（根据当前的用户id）
         $cart=CartModel::where('user_id',$user_id)->first();
-        //TODO 生成订单号 计算订单总价 纪录订单信息（订单表orders）
+        //生成订单号 计算订单总价 纪录订单信息（订单表orders）
         //生成订单号
         //选择一个随机的方案
         mt_srand((double) microtime() * 1000000);
@@ -41,7 +41,7 @@ class OrderController extends AlipayController
         ];
         //新增一条纪录并返回id
         $order_id=OrderModel::insertGetId($data);
-        //TODO 纪录订单商品（订单商品表orders_goods）
+        // 纪录订单商品（订单商品表orders_goods）
         //根据用户id查询购物车表商品id
         $goods_id=CartModel::where('user_id',$user_id)->get()->toArray();//打印是二维数组
         $money=0;
@@ -64,9 +64,9 @@ class OrderController extends AlipayController
             ];
             Orders_GoodsModle::insert($order_goods);
         }
-        //TODO 清空购物车
+        // 清空购物车
         CartModel::where('user_id',$user_id)->delete();
-        //TODO 跳转到支付页面
+        // 跳转到支付页面
         $order = [
             'out_trade_no' => $order_sn,//订单号
             'total_amount' => $money,//总金额

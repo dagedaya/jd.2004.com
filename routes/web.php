@@ -14,9 +14,9 @@
 Route::get('/', function () {
     return view('welcome');
 });
-
-Route::get('test/php','index\TestController@php');//phpinfo
-
+//phpInfo(测试）
+Route::get('/php','index\TestController@php');//phpinfo
+Route::get('/lianxi','index\TestController@lianxi');
 
 Route::get('/','index\IndexController@index');//前台首页
 Route::get('register','index\LoginController@register');//注册视图
@@ -40,33 +40,39 @@ Route::get('cart','index\CartController@cart');//购物车页面
 Route::get('order/create','index\OrderController@create');//生成订单
 Route::get('commit','index\OrderController@commit');//提交订单页面
 
+//支付
 Route::get('pay/paysuccess','index\AlipayController@AliPayReturn');//支付成功页面
 Route::get('pay/payfail','index\AlipayController@AliPayReturn');//支付失败页面
 
+//github登陆
 Route::get('github/callback','index\LoginController@callback');
 Route::get('login/callback','index\LoginController@callback');//github登陆
 
+//收藏
+Route::get('no_collect','index\ShopController@no_collect')->middleware('login');//商品收藏
+Route::get('off_collect','index\ShopController@off_collect')->middleware('login');//取消收藏
 
-Route::get('no_collect','index\ShopController@no_collect');//商品收藏
-Route::get('off_collect','index\ShopController@off_collect');//取消收藏
-
+//搜索
 Route::get('search','index\IndexController@search');//搜索
 
-Route::get('shop/comment','index\ShopController@comment');//评论
-Route::get('shop/comment1','index\ShopController@comment1');//展示评论
+//评论
+Route::get('/comment','index\ShopController@comment');//评论
+Route::get('/comment1','index\ShopController@comment1');//展示评论
 
+//抽奖
 Route::get('prize/index','index\PrizeController@index');//抽奖视图
 Route::get('prize/add','index\PrizeController@add');//开始抽奖
 Route::get('prize/ceshi','index\PrizeController@ceshi');//测试
 
-//电影购买系统
+    //电影购买系统
 Route::get('test/movie','index\TestController@movie');//视图
 Route::get('test/movieadd','index\TestController@movieadd');
 
 //递归（斐波那契数列第n项）
 Route::get('test/fab','index\TestController@fab');
 
-Route::get('/center','index\CenterController@center');//个人中心视图页面
+//签到
+Route::get('/center','index\CenterController@center')->middleware('login');//个人中心视图页面
 Route::get('/btn','index\CenterController@btn');//签到
 
 //支付宝支付处理路由
@@ -74,5 +80,10 @@ Route::get('index/alipay','index\AlipayController@Alipay');  // 发起支付请�
 Route::any('cart/sync','index\AlipayController@AliPayReturn'); //服务器异步通知页面路径
 Route::any('index/return','index\AlipayController@AliPayNotify');  //页面跳转同步通知页面路径
 
+//优惠券
+Route::get('/new_coupon','index\CouponController@new_coupon');//新人领取优惠劵视图页面
+Route::post('add','index\CouponController@add');//领取优惠劵
 
+//时间
+Route::get('/expire','index\TestController@expire');
 

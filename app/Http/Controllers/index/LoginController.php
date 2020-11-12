@@ -141,20 +141,17 @@ class loginController extends Controller
             //用户每一次登陆的时间
             $key="login:".$res['user_id'];
 //            dd($key);
-            $haha=Redis::lpush($key,time());
+//            $haha=Redis::lsh($key,time());
 //            $xixi=Redis::lrange($key,0,-1);
 //            foreach($xixi as $k=>$v){
 //                echo date('Y-m-d H:i:s',$v)."<br>";
 //            }
             //存session
             session(['user_id'=>$res['user_id'],'user_name'=>$res['user_name'],'user_email'=>$res['user_email'],'user_tel'=>$res['user_tel']]);
-            if(!empty(session('user_id'))){
-                return redirect('/center');
-            }
             //如果密码正确了那就把登陆的ip、最后登陆的时间、登陆的次数存到数据库
             $loginInfo=['last_ip'=>$last_ip,'last_login'=>time(),'login_count'=>$res['login_count']+1];
             LoginModels::where('user_id',$res['user_id'])->update($loginInfo);
-            return redirect('/')->with('msg', '登陆成功');
+            return redirect('/center')->with('msg', '登陆成功');
         } else {
             /**
              *  10分钟内，用户连续输入密码错误超过5次，锁定用户 60分钟（禁止登录）。
@@ -211,7 +208,7 @@ class loginController extends Controller
         $u = GithubModel::where(['guid' => $git_user['id']])->first();
         if ($u)          //存在
         {
-            // TODO 登录逻辑
+            //  登录逻辑
             $this->webLogin($git_user['id']);//$u->uid
         } else {          //不存在
             //在 用户主表中创建新用户  获取 uid

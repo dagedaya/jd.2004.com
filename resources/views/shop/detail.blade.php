@@ -1036,10 +1036,13 @@ undefined
             }).done(function(res){
                 if(res.erron==1){
                     alert(res.msg);
-                    window.location.href="/order/cart";
+                    window.location.href="/cart";
                 }else if(res.erron==400001){
                     alert(res.msg);
                     window.location.href = '/login/login';
+                }else if(res.erron==500001){
+                    alert(res.msg);
+                    window.location.href='/cart';
                 }
             });
         });
@@ -1061,8 +1064,8 @@ undefined
                     if(res=="非法操作"){
                         alert('非法操作');
                         location.href="/";
-                    }else if(res=="请先登录"){
-                        alert('请先登录');
+                    }else if(res.error==400003){
+                        alert(res.msg);
                         location.href="/login";
                     }else if(res=="ok"){
                         $('#no_collect').hide();
@@ -1108,12 +1111,12 @@ undefined
                 alert('评价不能为空哦！');
             }
             $.ajax({
-                url:"shop/comment",
+                url:"/comment",
                 data:'goods_id='+goods_id+'&comment_content='+_evaluate.val(),
                 dataType:'json',
                 type:"get",
                 success:function (res) {
-                    if(res.error==400){
+                    if(res.error==400003){
                         alert(res.msg);
                         location.href="login";
                     }else if(res.error==500){

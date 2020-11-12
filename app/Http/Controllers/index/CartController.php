@@ -19,11 +19,29 @@ class CartController extends Controller
         $list=CartModel::where('user_id',$user_id)->get();
         $goods = [];
         foreach($list as $k=>$v){
-            $goods[]=GoodsModel::find($v['goods_id'])->toArray();
+            if($v['id']<20){
+                $goods[]=GoodsModel::find($v['goods_id'])->toArray();
+            }
         }
+        $res=GoodsModel::where('cat_id',52)->get()->toArray();
+        //得到商品分类id
+//        $cat_id=GoodsModel::get()->orderBy('cat_id',desc)->limit(4);
         $data=[
             'goods'=>$goods,
+           'res'=>$res,
         ];
+//        $goods_id=GoodsModel::where('goods_id',$goods['goods_id'])->first('cat_id')->toArray();
+//        dd($goods_id);
+//        //查询商品的分类id
+//        $goods_id=[];
+//        foreach($goods as $k=>$v){
+//            $goods_id=$v['goods_id'];
+//        }
+//        //得到所有商品id
+////        $goods_id=array_unique($goods_id);
+//        dd($goods_id);
+
+        //
         return view('order/cart',$data);
     }
     //加入购物车
@@ -49,7 +67,7 @@ class CartController extends Controller
         ];
         //入库(新增记录并返回id)
         $res=CartModel::insertGetId($cart_info);
-        if($res>0){
+        if($res<20){
             $data=[
                 'erron'=>1,
                 'msg'=>'加入购物车成功',
@@ -58,7 +76,7 @@ class CartController extends Controller
         }else{
             $data=[
                 'erron'=>500001,
-                'msg'=>'加入购物车失败',
+                'msg'=>'购物车已满，请先清理',
             ];
             echo json_encode($data);
         }

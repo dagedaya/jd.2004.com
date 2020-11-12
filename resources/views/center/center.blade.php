@@ -186,6 +186,7 @@ $(function(){
 							<dt><i>·</i> 我的中心</dt>
 							<dd><a href="home-person-collect.html">我的收藏</a></dd>
 							<dd><a href="home-person-footmark.html">我的足迹</a></dd>
+                            <dd><a href="coupon">我的优惠劵</a></dd>
 						</dl>
 						<dl>
 							<dt><i>·</i> 物流消息</dt>
@@ -662,7 +663,7 @@ undefined
             $.ajax({
                 url:"btn",
                 success:function (res) {
-                    if(res.error==400002){
+                    if(res.error==400003){
                         alert(res.msg);
                         location.href="login";
                     }else if(res.error==20000){
