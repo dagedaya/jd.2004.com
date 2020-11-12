@@ -155,8 +155,7 @@ class WxController extends Controller
                         $result=$this->text($toUser,$fromUser,$content);
                         return $result;
                     }
-                    }
-
+                }
             }
         } else {
             return false;
@@ -372,7 +371,11 @@ class WxController extends Controller
         }
         return $token;
     }
-    //天气
+
+    /**
+     * 天气
+     * @return string
+     */
     public function weather1(){
         $url='http://api.k780.com:88/?app=weather.future&weaid=heze&&appkey=10003&sign=b59bc3ef6191eb9f747dd4e83c99f2a4&format=json';
         $weather=file_get_contents($url);
@@ -386,7 +389,11 @@ class WxController extends Controller
         Log::info('===='.$content);
         return $content;
     }
-    //上传素材了
+
+    /**
+     * 上传素材
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
     public function guzzle2(){
         $access_token=$this->access_token();
         $type="image";
@@ -405,7 +412,11 @@ class WxController extends Controller
 //        $media_id=json_decode($data,true);
         echo $data;
     }
-    //自定义菜单(post)
+
+    /**
+     * 自定义菜单
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
     public function create_menu(){
         //获取access_token
         $access_token=$this->access_token();

@@ -95,10 +95,6 @@ class TestController extends Controller
         }
         echo Fibonacci(6);
     }
-    //phpinfo
-    public function php(){
-        phpinfo();
-    }
     //练习
     public function lianxi(){
         echo date('Y-m-d H:i:s',strtotime('+1day'));

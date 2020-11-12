@@ -14,8 +14,13 @@
 Route::get('/', function () {
     return view('welcome');
 });
-//phpInfo(测试）
-Route::get('/php','index\TestController@php');//phpinfo
+//查看扩展
+Route::get('/info',function (){
+    phpinfo();
+});
+/**
+ * 项目开发路由
+ */
 Route::get('/lianxi','index\TestController@lianxi');
 
 Route::get('/','index\IndexController@index');//前台首页
