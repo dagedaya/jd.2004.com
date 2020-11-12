@@ -113,6 +113,10 @@ Route::get('/access_token','index\WxController@access_token');
 Route::get('/weather1','index\WxController@weather1');
 //自定义菜单
 Route::get('/create_menu','index\WxController@create_menu');
+//微信网页授权
+Route::get('/web_auth','index\WxController@wxWebAuth');
+//微信授权后跳转
+Route::get('/web_redirect','index\WxController@wxWebRedirect');
 
 
 //测试1

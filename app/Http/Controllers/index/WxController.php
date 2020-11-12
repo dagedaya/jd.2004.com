@@ -426,7 +426,7 @@ class WxController extends Controller
                 [
                     'type'=>'view',
                     'name'=>"商城",
-                    'url'=>"http://2004dageda.wwwhb.wenao.top/",
+                    'url'=>env('APP_URL').'/web_auth',
                 ],
                 [
                     'type'=>'click',
@@ -459,6 +459,22 @@ class WxController extends Controller
         ]);
         $data=$response->getBody();
         echo $data;
+    }
+    /**
+     * 微信网页授权
+     */
+    public function wxWebAuth(){
+        $redirect=env('APP_URL').'/web_redirect';
+        $url='https://open.weixin.qq.com/connect/oauth2/authorize?appid='.env('APP_URL').'&redirect_uri='.$redirect.'&response_type=code&scope=SCOPE&state=STATE#wechat_redirect';
+        dd($url);
+        return $redirect($url);
+    }
+    /**
+     * 微信网页授权后跳转地址
+     */
+    public function wxWebRedirect(){
+        $code=$_GET['code'];
+        dd($code);
     }
 
 
