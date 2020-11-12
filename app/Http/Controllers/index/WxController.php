@@ -354,7 +354,7 @@ class WxController extends Controller
         $token=Redis::get($key);
         if($token){
 //            echo "有缓存";
-//            echo $token;it 
+//            echo $token;it
         }else{
 //            echo "无缓存";
             $url= "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=".env('WX_APPID')."&secret=".env('WX_APPSECRET')."";
