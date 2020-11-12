@@ -465,7 +465,7 @@ class WxController extends Controller
      * https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxfbad01063a92db24&redirect_uri=http://2004dageda.wwwhb.wenao.top/web_redirect&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect
      */
     public function wxWebAuth(){
-        $redirect='http://2004dageda.wwwhb.wenao.top'.'/web_redirect';
+        $redirect='http://2004dageda.wwwzy.top/'.'/web_redirect';
         $appid="wxfbad01063a92db24";
         $url="https://open.weixin.qq.com/connect/oauth2/authorize?appid=".$appid."&redirect_uri=".$redirect."&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
         return redirect($url);
@@ -474,8 +474,22 @@ class WxController extends Controller
      * 微信网页授权后跳转地址
      */
     public function wxWebRedirect(){
-//        $code=$_GET['code'];
-//        dd($code);
+        $code=$_GET['code'];
+        $url="https://api.weixin.qq.com/sns/oauth2/access_token?appid=".env('WX_APPID')."&secret=".env('WX_APPSECRET')."&code=".$code."&grant_type=authorization_code";
+        $xml=file_get_contents($url);
+        $xml_code=json_decode($xml,true);
+        if(isset($xml_code['errcode'])){
+            if($xml_code['errcode']==40163){
+                return "验证码已经失效";
+            }
+        }
+        $access_token=$xml_code['access_token'];
+        $openid=$xml_code['openid'];
+        //拉取用户的信息
+        $api="https://api.weixin.qq.com/sns/userinfo?access_token=".$access_token."&openid=".$openid."&lang=zh_CN";
+        $user=file_get_contents($api);
+        $user_info=json_decode($user,true);
+        dd($user_info);
     }
 
 
