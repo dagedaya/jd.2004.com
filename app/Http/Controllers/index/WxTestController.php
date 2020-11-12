@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\index;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 use Log;

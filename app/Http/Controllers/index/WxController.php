@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\index;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redis;
 use App\Model\WxUserModel;
