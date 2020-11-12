@@ -469,7 +469,6 @@ class WxController extends Controller
         $redirect='http://2004dageda.wwwhb.wenao.top/'.'/web_redirect';
         $appid="wxfbad01063a92db24";
         $url="https://open.weixin.qq.com/connect/oauth2/authorize?appid=".$appid."&redirect_uri=".$redirect."&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
-        dd($url);
         return redirect($url);
     }
     /**
