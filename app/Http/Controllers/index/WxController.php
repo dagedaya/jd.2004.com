@@ -462,12 +462,13 @@ class WxController extends Controller
     }
     /**
      * 微信网页授权
+     * https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxfbad01063a92db24&redirect_uri=http://2004dageda.wwwhb.wenao.top/web_redirect&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect
      */
     public function wxWebAuth(){
-        $redirect=env('APP_URL').'/web_redirect';
-        $url='https://open.weixin.qq.com/connect/oauth2/authorize?appid='.env('APP_URL').'&redirect_uri='.$redirect.'&response_type=code&scope=SCOPE&state=STATE#wechat_redirect';
-        dd($url);
-        return $redirect($url);
+        $redirect='http://2004dageda.wwwhb.wenao.top'.'/web_redirect';
+        $appid="wxfbad01063a92db24";
+        $url="https://open.weixin.qq.com/connect/oauth2/authorize?appid=".$appid."&redirect_uri=".$redirect."&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
+        return redirect($url);
     }
     /**
      * 微信网页授权后跳转地址
