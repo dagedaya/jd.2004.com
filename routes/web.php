@@ -87,3 +87,41 @@ Route::post('add','index\CouponController@add');//领取优惠劵
 //时间
 Route::get('/expire','index\TestController@expire');
 
+
+
+
+
+
+
+
+
+/**
+ * 微信开发路由
+ */
+//微信开发者服务器接入(即支持get又支持post)
+Route::match(['get','post'],'/wx','index\WxController@checkSignature');
+//上传素材
+Route::get('/guzzle2','index\WxController@guzzle2');
+//获取access_token
+Route::get('/access_token','index\WxController@access_token');
+//天气(780)
+Route::get('/weather1','index\WxController@weather1');
+//自定义菜单
+Route::get('/create_menu','index\WxController@create_menu');
+
+
+//测试1
+Route::get('/weather','index\WxController@weather');
+//测试2
+Route::get('/test','index\WxController@test');
+//测试3(postman)
+Route::get('test2','index\WxController@test2');//get
+Route::post('test3','index\WxController@test3');//post(form-data)
+Route::post('test4','index\WxController@test4');//post(raw)
+Route::get('test5','index\WxController@test5');//测试下载素材
+//测试路由分组 test(prefix)
+Route::prefix('/test')->group(function (){
+    Route::get('/guzzle1','index\WxTestController@guzzle1');//使用guzzl发送get请求
+    Route::get('/guzzle2','index\WxTestController@guzzle2');//上传素材
+    Route::get('/weather','index\WxTestController@weather');//天气780
+});
