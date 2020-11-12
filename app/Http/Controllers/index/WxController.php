@@ -343,16 +343,18 @@ class WxController extends Controller
         $info = sprintf($template, $toUser, $fromUser, time(), 'video', $content,$title,$description);
         return $info;
     }
-
-    //获取access_token并缓存
+    /**
+     * 获取access_token并缓存
+     * @return mixed
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
     public function access_token(){
         $key="access_token:";
         //判断是否有缓存
         $token=Redis::get($key);
         if($token){
-            //有缓存
 //            echo "有缓存";
-//            echo $token;
+//            echo $token;it 
         }else{
 //            echo "无缓存";
             $url= "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=".env('WX_APPID')."&secret=".env('WX_APPSECRET')."";
