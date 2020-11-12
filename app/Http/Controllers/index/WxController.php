@@ -474,8 +474,8 @@ class WxController extends Controller
      * 微信网页授权后跳转地址
      */
     public function wxWebRedirect(){
-        $code=$_GET['code'];
-        dd($code);
+//        $code=$_GET['code'];
+//        dd($code);
     }
 
 
