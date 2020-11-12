@@ -427,7 +427,7 @@ class WxController extends Controller
                 [
                     'type'=>'view',
                     'name'=>"商城1",
-                    'url'=>'http://2004dageda.wwwhb.wenao.top/web_auth',
+                    'url'=>'http://2004dageda.wwwhb.wenao.top'.'/web_auth',
                 ],
                 [
                     'type'=>'click',
@@ -491,6 +491,9 @@ class WxController extends Controller
         $user=file_get_contents($api);
         $user_info=json_decode($user,true);
 //        dd($user_info);
+        if($user_info){
+            return redirect('/');
+        }
     }
 
 
