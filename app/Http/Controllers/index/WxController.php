@@ -71,8 +71,9 @@ class WxController extends Controller
                                     $result=$this->text($toUser,$fromUser,$content);
                                     return $result;
                                     break;
-//                                case "DAILY";  //二级每日推荐
-                                    
+                                case "DAILY";  //二级每日推荐
+                                    $result=$this->daily($data);
+                                    return $result;
                             }
                         }elseif ($data->Event=='VIEW'){  //菜单view事件
                             $this->viewhandler($data);
@@ -500,6 +501,29 @@ class WxController extends Controller
         if($user_info){
             return redirect('/');
         }
+    }
+    /**
+     * 每日推荐
+     */
+    public function daily($data){
+        $toUser = $data->FromUserName;//openid
+        $fromUser = $data->ToUserName;
+        $template="<xml>
+              <ToUserName><![CDATA[".$toUser."]]></ToUserName>
+              <FromUserName><![CDATA[".$fromUser."]]></FromUserName>
+              <CreateTime>".time()."</CreateTime>
+              <MsgType><![CDATA[news]]></MsgType>
+              <ArticleCount>1</ArticleCount>
+              <Articles>
+                <item>
+                  <Title><![CDATA[每日推荐]]></Title>
+                  <Description><![CDATA[description1]]></Description>
+                  <PicUrl><![CDATA[http://2004dageda.wwwhb.wenao.top/static/img/ad.jpg]]></PicUrl>
+                  <Url><![CDATA[http://2004dageda.wwwhb.wenao.top/detail?id=217]]></Url>
+                </item>
+              </Articles>
+            </xml>";
+        return $template;
     }
 
 
