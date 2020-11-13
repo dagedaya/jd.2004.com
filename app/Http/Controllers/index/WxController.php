@@ -80,8 +80,6 @@ class WxController extends Controller
                                     $title="每日推荐";
                                     $description=$recommend['keywords'];
                                     $result=$this->img_text($toUser,$fromUser,$title,$description,$content,$url);
-                                    $content="签到成功";
-                                    $result=$this->text($toUser,$fromUser,$content);
                                     return $result;
                                     break;
                             }
