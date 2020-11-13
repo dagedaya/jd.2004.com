@@ -76,7 +76,7 @@ class WxController extends Controller
                                     $recommend=GoodsModel::inRandomOrder()->take(1)->first()->toArray();
                                     $url="http://2004dageda.wwwhb.wenao.top/".'detail?id='.$recommend['goods_id'];
                                     //上传素材
-                                    $content=$recommend['goods_img'];
+                                    $content="XbK76IO9SsKCnctnFy0iOaZf55mA8Xoq6gw_kr_aZ6K2O06SgwCEUSDNKGVnhDDQ";
                                     $title="每日推荐";
                                     $description=$recommend['keywords'];
                                     $result=$this->img_text($toUser,$fromUser,$title,$description,$content,$url);
@@ -341,7 +341,7 @@ class WxController extends Controller
      * @return string
      */
     private function img_text($toUser, $fromUser, $title, $description, $content, $url){
-        $xml="<xml>
+        $template="<xml>
               <ToUserName><![CDATA[%s]]></ToUserName>
               <FromUserName><![CDATA[%s]]></FromUserName>
               <CreateTime>%s</CreateTime>
@@ -356,7 +356,7 @@ class WxController extends Controller
                 </item>
               </Articles>
             </xml>";
-        $info=sprintf($xml,$toUser,$fromUser,time(),'new',1,$title,$description,$content,$url);
+        $info=sprintf($template,$toUser,$fromUser,time(),'new',1,$title,$description,$content,$url);
         return $info;
     }
     /**
