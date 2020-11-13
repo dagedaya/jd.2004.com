@@ -10,6 +10,7 @@ use GuzzleHttp\Client;
 use App\IndexModel\MediaModel;
 use Log;
 use Illuminate\Support\Str;
+use App\IndexModel\GoodsModel;
 class WxController extends Controller
 {
     //微信接入
@@ -72,7 +73,13 @@ class WxController extends Controller
                                     return $result;
                                     break;
                                 case "DAILY";  //二级每日推荐
-                                    $result=$this->daily($data);
+                                    $recommend=GoodsModel::inRandomOrder()->take(1)->first()->toArray();
+                                    $url="http://2004dageda.wwwhb.wenao.top/".'detail?id='.$recommend['goods_id'];
+                                    //上传素材
+                                    $material="K-fyTireT8ad_G_7Z6y1khNtoG72sFQ5gzwS4yAvFXqnRQ26BCSGDrlK6dSOti24";
+                                    $title="每日推荐";
+                                    $description=$recommend['keywords'];
+                                    $result=$this->img_text($toUser,$fromUser,$title,$description,$material,$url);
                                     return $result;
                             }
                         }elseif ($data->Event=='VIEW'){  //菜单view事件
@@ -321,6 +328,36 @@ class WxController extends Controller
         $info = sprintf($template, $toUser, $fromUser, time(), 'text', $content);
         return $info;
     }
+
+    /**
+     * 2 每日推荐
+     * @param $toUser
+     * @param $fromUser
+     * @param $title
+     * @param $description
+     * @param $content
+     * @param $url
+     * @return string
+     */
+    private function img_text($toUser,$fromUser,$title,$description,$material,$url){
+        $xml="<xml>
+              <ToUserName><![CDATA[%s]]></ToUserName>
+              <FromUserName><![CDATA[%s]]></FromUserName>
+              <CreateTime>%s</CreateTime>
+              <MsgType><![CDATA[%s]]></MsgType>
+              <ArticleCount>%s</ArticleCount>
+              <Articles>
+                <item>
+                  <Title><![CDATA[%s]]></Title>
+                  <Description><![%s]]></Description>
+                  <PicUrl><![CDATA[%s]]></PicUrl>
+                  <Url><![CDATA[%s]]></Url>
+                </item>
+              </Articles>
+            </xml>";
+        $info=sprintf($toUser,$fromUser,time(),'new',1,$title,$description,$material,$url);
+        return $info;
+    }
     /**
      * 4 回复视频消息
      * @param $toUser
@@ -502,29 +539,29 @@ class WxController extends Controller
             return redirect('/');
         }
     }
-    /**
-     * 每日推荐
-     */
-    public function daily($data){
-        $toUser = $data->FromUserName;//openid
-        $fromUser = $data->ToUserName;
-        $template="<xml>
-              <ToUserName><![CDATA[".$toUser."]]></ToUserName>
-              <FromUserName><![CDATA[".$fromUser."]]></FromUserName>
-              <CreateTime>".time()."</CreateTime>
-              <MsgType><![CDATA[news]]></MsgType>
-              <ArticleCount>1</ArticleCount>
-              <Articles>
-                <item>
-                  <Title><![CDATA[每日推荐]]></Title>
-                  <Description><![CDATA[description1]]></Description>
-                  <PicUrl><![CDATA[http://2004dageda.wwwhb.wenao.top/static/img/ad.jpg]]></PicUrl>
-                  <Url><![CDATA[http://2004dageda.wwwhb.wenao.top/detail?id=217]]></Url>
-                </item>
-              </Articles>
-            </xml>";
-        return $template;
-    }
+//    /**
+//     * 每日推荐
+//     */
+//    public function daily($data){
+//        $toUser = $data->FromUserName;//openid
+//        $fromUser = $data->ToUserName;
+//        $template="<xml>
+//              <ToUserName><![CDATA[".$toUser."]]></ToUserName>
+//              <FromUserName><![CDATA[".$fromUser."]]></FromUserName>
+//              <CreateTime>".time()."</CreateTime>
+//              <MsgType><![CDATA[news]]></MsgType>
+//              <ArticleCount>1</ArticleCount>
+//              <Articles>
+//                <item>
+//                  <Title><![CDATA[每日推荐]]></Title>
+//                  <Description><![CDATA[每日推荐]]></Description>
+//                  <PicUrl><![CDATA[http://2004dageda.wwwhb.wenao.top/static/img/ad.jpg]]></PicUrl>
+//                  <Url><![CDATA[http://2004dageda.wwwhb.wenao.top/detail?id=217]]></Url>
+//                </item>
+//              </Articles>
+//            </xml>";
+//        return $template;
+//    }
 
 
 
