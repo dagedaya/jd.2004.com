@@ -71,6 +71,8 @@ class WxController extends Controller
                                     $result=$this->text($toUser,$fromUser,$content);
                                     return $result;
                                     break;
+//                                case "DAILY";  //二级每日推荐
+                                    
                             }
                         }elseif ($data->Event=='VIEW'){  //菜单view事件
                             $this->viewhandler($data);
@@ -446,6 +448,11 @@ class WxController extends Controller
                             'type'  => 'click',
                             'name'  => '签到',
                             'key'   => 'CHECKIN'
+                        ],
+                        [
+                            'type'=>'click',
+                            'name'=>'每日推荐',
+                            'key'=>'DAILY',
                         ],
                     ]
                 ],
