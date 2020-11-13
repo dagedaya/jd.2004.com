@@ -76,11 +76,12 @@ class WxController extends Controller
                                     $recommend=GoodsModel::inRandomOrder()->take(1)->first()->toArray();
                                     $url="http://2004dageda.wwwhb.wenao.top/".'detail?id='.$recommend['goods_id'];
                                     //上传素材
-                                    $material="K-fyTireT8ad_G_7Z6y1khNtoG72sFQ5gzwS4yAvFXqnRQ26BCSGDrlK6dSOti24";
+                                    $material=$recommend['goods_img'];
                                     $title="每日推荐";
                                     $description=$recommend['keywords'];
                                     $result=$this->img_text($toUser,$fromUser,$title,$description,$material,$url);
                                     return $result;
+                                    break;
                             }
                         }elseif ($data->Event=='VIEW'){  //菜单view事件
                             $this->viewhandler($data);
