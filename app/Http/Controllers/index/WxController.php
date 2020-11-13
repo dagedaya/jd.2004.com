@@ -72,7 +72,7 @@ class WxController extends Controller
                                     $result=$this->text($toUser,$fromUser,$content);
                                     return $result;
                                     break;
-                                case "DAILY";  //二级每日推荐
+                                case "DAILY";  //二级每日推荐(商城商品)
                                     $recommend=GoodsModel::inRandomOrder()->take(1)->first()->toArray();
                                     $url="http://2004dageda.wwwhb.wenao.top/".'detail?id='.$recommend['goods_id'];
                                     //上传素材
