@@ -79,7 +79,8 @@ class WxController extends Controller
                                     $PicUrl="http://2004dageda.wwwhb.wenao.top/static/img/ad.jpg";
                                     $title="每日推荐";
                                     $description="每日推荐";
-                                    $result=$this->img_text($toUser,$fromUser,$title,$description,$PicUrl,$url);
+                                    $content=$this->img_text($toUser,$fromUser,$title,$description,$PicUrl,$url);
+                                    $result=$this->text($toUser,$fromUser,$content);
                                     return $result;
                                     break;
                             }
