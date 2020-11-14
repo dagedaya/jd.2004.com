@@ -351,7 +351,7 @@ class WxController extends Controller
               <Articles>
                 <item>
                   <Title><![CDATA[%s]]></Title>
-                  <Description><![dfsdf]]></Description>
+                  <Description><![%s]]></Description>
                   <PicUrl><![CDATA[%s]]></PicUrl>
                   <Url><![CDATA[%s]]></Url>
                 </item>
