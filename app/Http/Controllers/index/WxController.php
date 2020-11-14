@@ -80,6 +80,9 @@ class WxController extends Controller
                                     $PicUrl="http://2004dageda.wwwhb.wenao.top/static/img/ad.jpg";
                                     $title="每日推荐";
                                     $description=$recommend['keywords'];
+                                    if(empty($description)){
+                                        $description="衣服";
+                                    }
                                     $result=$this->img_text($toUser,$fromUser,$title,$description,$PicUrl,$url);
                                     return $result;
                                     break;
