@@ -84,6 +84,7 @@ class WxController extends Controller
                                         $description="衣服";
                                     }
                                     $result=$this->img_text($toUser,$fromUser,$title,$description,$PicUrl,$url);
+                                    dd($result);
                                     return $result;
                                     break;
                             }
