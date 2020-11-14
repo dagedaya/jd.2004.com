@@ -574,7 +574,7 @@ class WxController extends Controller
      */
     public function service(){
         $access_token=$this->access_token();
-        dd($access_token);
+//        dd($access_token);
 //        echo $access_token;die;
         $url="https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token=".$access_token."";
         $client=new Client();
@@ -608,6 +608,8 @@ class WxController extends Controller
 //
 //                ],
 //            ];
+//            $data=json_encode($data,JSON_UNESCAPED_UNICODE);
+//            dd($data);
             $respones=$client->request('POST',$url,[
                 'verify'=>false,
                 'body'=>json_encode($data,JSON_UNESCAPED_UNICODE),
