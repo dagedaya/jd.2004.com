@@ -574,10 +574,12 @@ class WxController extends Controller
      */
     public function service(){
         $access_token=$this->access_token();
+        dd($access_token);
 //        echo $access_token;die;
         $url="https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token=".$access_token."";
         $client=new Client();
         foreach($this->users as $k=>$v){
+            //文本
 //            $data = [
 //                'touser' => $v,
 //                'msgtype' => 'text',
@@ -585,17 +587,27 @@ class WxController extends Controller
 //                    'content' => 'shabiwuyanhui'
 //                ]
 //            ];
+            //视频
+//            $data=[
+//                'touser'=>$v,
+//                'msgtype'=>'video',
+//                'video'=>[
+//                    'media_id'=>'5MgKg4feEB-ydef4rmo1eQz50-bKYObccFoJf9xFuS-NSRGXXaW5aQHO-Azrownm',
+//                    'title'=>"永不失联的爱",
+//                    'description'=>"珍惜",
+//                ],
+//            ];
+            //音乐
             $data=[
                 'touser'=>$v,
-                'msgtype'=>'video',
-                'video'=>[
-                    'media_id'=>'5MgKg4feEB-ydef4rmo1eQz50-bKYObccFoJf9xFuS-NSRGXXaW5aQHO-Azrownm',
-                    'title'=>"永不失联的爱",
-                    'description'=>"珍惜",
+                'msgtype'=>"music",
+                'music'=>[
+                    'title'=>'云与海',
+                    'description'=>'嗯呐',
+//                    'musicurl'=>
+                    
                 ],
             ];
-//            $data=json_encode($data,JSON_UNESCAPED_UNICODE);
-//            dd($data);
             $respones=$client->request('POST',$url,[
                 'verify'=>false,
                 'body'=>json_encode($data,JSON_UNESCAPED_UNICODE),
