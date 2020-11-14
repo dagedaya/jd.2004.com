@@ -450,3 +450,15 @@ https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxfbad01063a92db24&red
 
 
 
+<xml><ToUserName><![CDATA[gh_709dd1423d4c]]></ToUserName>
+<FromUserName><![CDATA[onun_5lLzel17JvjX1tQiJH40eno]]></FromUserName>
+<CreateTime>1605314539</CreateTime>
+<MsgType><![CDATA[event]]></MsgType>
+<Event><![CDATA[CLICK]]></Event>
+<EventKey><![CDATA[DAILY]]></EventKey>
+</xml>
+
+
+
+
+
