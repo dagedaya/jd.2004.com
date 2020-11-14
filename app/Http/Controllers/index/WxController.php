@@ -588,26 +588,25 @@ class WxController extends Controller
 //                ]
 //            ];
             //视频
-            $data=[
-                'touser'=>$v,
-                'msgtype'=>'video',
-                'video'=>[
-                    'media_id'=>'5MgKg4feEB-ydef4rmo1eQz50-bKYObccFoJf9xFuS-NSRGXXaW5aQHO-Azrownm',
-                    'title'=>"永不失联的爱",
-                    'description'=>"珍惜",
-                ],
-            ];
-            //音乐
 //            $data=[
 //                'touser'=>$v,
-//                'msgtype'=>"music",
-//                'music'=>[
-//                    'title'=>'云与海',
-//                    'description'=>'嗯呐',
-////                    'musicurl'=>
-//
+//                'msgtype'=>'video',
+//                'video'=>[
+//                    'media_id'=>'5MgKg4feEB-ydef4rmo1eQz50-bKYObccFoJf9xFuS-NSRGXXaW5aQHO-Azrownm',
+//                    'title'=>"永不失联的爱",
+//                    'description'=>"珍惜",
 //                ],
 //            ];
+            //音乐
+            $data=[
+                'touser'=>$v,
+                'msgtype'=>"music",
+                'music'=>[
+                    'title'=>'云与海',
+                    'description'=>'嗯呐',
+                    'musicurl'=>'http://2004dageda.wwwzy.top/static/music/1.mp3',
+                ],
+            ];
 //            $data=json_encode($data,JSON_UNESCAPED_UNICODE);
 //            dd($data);
             $respones=$client->request('POST',$url,[
