@@ -356,7 +356,7 @@ class WxController extends Controller
                 </item>
               </Articles>
             </xml>";
-        $info=sprintf($template,$toUser,$fromUser,time(),'new',1,$title,$description,$PicUrl,$url);
+        $info=sprintf($template,$toUser,$fromUser,time(),'news',1,$title,$description,$PicUrl,$url);
         return $info;
     }
     /**
