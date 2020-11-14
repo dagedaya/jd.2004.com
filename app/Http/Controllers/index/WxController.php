@@ -1,5 +1,26 @@
 <?php
-
+/*
+                   _ooOoo_
+                  o8888888o
+                  88" . "88
+                  (| -_- |)
+                  O\  =  /O
+               ____/`---'\____
+             .'  \\|     |//  `.
+            /  \\|||  :  |||//  \
+           /  _||||| -:- |||||-  \
+           |   | \\\  -  /// |   |
+           | \_|  ''\---/''  |   |
+           \  .-\__  `-`  ___/-. /
+         ___`. .'  /--.--\  `. . __
+      ."" '<  `.___\_<|>_/___.'  >'"".
+     | | :  `- \`.;`\ _ /`;.`/ - ` : | |
+     \  \ `-.   \_ __\ /__ _/   .-` /  /
+======`-.____`-.___\_____/___.-`____.-'======
+                   `=---='
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+            佛祖保佑       永无BUG
+*/
 namespace App\Http\Controllers\index;
 
 use App\Http\Controllers\Controller;
@@ -13,6 +34,16 @@ use Illuminate\Support\Str;
 use App\IndexModel\GoodsModel;
 class WxController extends Controller
 {
+    protected $users=[
+        'onun_5hqX5pq3NExeKBq5tkPTma8',
+        'onun_5uHxUjUGizidAdLb9jpM3cs',
+        'onun_5khx1uTIPCU2Kjb3we0lvmY',
+        'onun_5lLzel17JvjX1tQiJH40eno',
+        'onun_5uZWAMqxNreiztHdpsG8q2w',
+        'onun_5ibRHn9t-jU2uwI1-k2F5iM',
+        'onun_5mEDV2CUaFFFKC2bVRnOru0',
+        'onun_5pHZGUh8UqOospglx87FWkY',
+    ];
     //微信接入
     public function checkSignature(Request $request)
     {
@@ -544,29 +575,33 @@ class WxController extends Controller
             return redirect('/');
         }
     }
-//    /**
-//     * 每日推荐
-//     */
-//    public function daily($data){
-//        $toUser = $data->FromUserName;//openid
-//        $fromUser = $data->ToUserName;
-//        $template="<xml>
-//              <ToUserName><![CDATA[".$toUser."]]></ToUserName>
-//              <FromUserName><![CDATA[".$fromUser."]]></FromUserName>
-//              <CreateTime>".time()."</CreateTime>
-//              <MsgType><![CDATA[news]]></MsgType>
-//              <ArticleCount>1</ArticleCount>
-//              <Articles>
-//                <item>
-//                  <Title><![CDATA[每日推荐]]></Title>
-//                  <Description><![CDATA[每日推荐]]></Description>
-//                  <PicUrl><![CDATA[http://2004dageda.wwwhb.wenao.top/static/img/ad.jpg]]></PicUrl>
-//                  <Url><![CDATA[http://2004dageda.wwwhb.wenao.top/detail?id=217]]></Url>
-//                </item>
-//              </Articles>
-//            </xml>";
-//        return $template;
-//    }
+    /**
+     * 客服发送消息
+     * POST请求
+     */
+    public function service(){
+        $access_token=$this->access_token();
+        $url="https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token=".$access_token."";
+        $client=new Client();
+        foreach($this->users as $k=>$v){
+            $data=[
+                'toUser'=>$v,
+                'MsgType'=>'video',
+                'video'=>[
+                    'media_id'=>'BZ2zdtXdrLwa7FMe5',
+                    'title'=>"永不失联的爱",
+                    'description'=>"珍惜",
+                ],
+            ];
+            $respones=$client->request('POST',$url,[
+                'verify'=>false,
+                'body'=>json_encode($data,JSON_UNESCAPED_UNICODE),
+            ]);
+            echo $respones->getBody();
+        }
+    }
+
+
 
 
 
@@ -616,5 +651,26 @@ class WxController extends Controller
 ////        echo $token;die;
 //        $url="https://api.weixin.qq.com/cgi-bin/user/info?access_token=".$token."&openid=".$toUser."&lang=zh_CN";
 //        echo $url;
+//    }
+    //测试每日推荐
+//    public function daily($data){
+//        $toUser = $data->FromUserName;//openid
+//        $fromUser = $data->ToUserName;
+//        $template="<xml>
+//              <ToUserName><![CDATA[".$toUser."]]></ToUserName>
+//              <FromUserName><![CDATA[".$fromUser."]]></FromUserName>
+//              <CreateTime>".time()."</CreateTime>
+//              <MsgType><![CDATA[news]]></MsgType>
+//              <ArticleCount>1</ArticleCount>
+//              <Articles>
+//                <item>
+//                  <Title><![CDATA[每日推荐]]></Title>
+//                  <Description><![CDATA[每日推荐]]></Description>
+//                  <PicUrl><![CDATA[http://2004dageda.wwwhb.wenao.top/static/img/ad.jpg]]></PicUrl>
+//                  <Url><![CDATA[http://2004dageda.wwwhb.wenao.top/detail?id=217]]></Url>
+//                </item>
+//              </Articles>
+//            </xml>";
+//        return $template;
 //    }
 }
