@@ -35,14 +35,7 @@ use App\IndexModel\GoodsModel;
 class WxController extends Controller
 {
     protected $users=[
-        'onun_5hqX5pq3NExeKBq5tkPTma8',
-        'onun_5uHxUjUGizidAdLb9jpM3cs',
-        'onun_5khx1uTIPCU2Kjb3we0lvmY',
         'onun_5lLzel17JvjX1tQiJH40eno',
-        'onun_5uZWAMqxNreiztHdpsG8q2w',
-        'onun_5ibRHn9t-jU2uwI1-k2F5iM',
-        'onun_5mEDV2CUaFFFKC2bVRnOru0',
-        'onun_5pHZGUh8UqOospglx87FWkY',
     ];
     //微信接入
     public function checkSignature(Request $request)
@@ -385,7 +378,7 @@ class WxController extends Controller
               <Articles>
                 <item>
                   <Title><![CDATA[%s]]></Title>
-                  <Description><![%s]]></Description>
+                  <Description><![CDATA[%s]]></Description>
                   <PicUrl><![CDATA[%s]]></PicUrl>
                   <Url><![CDATA[%s]]></Url>
                 </item>
@@ -430,7 +423,7 @@ class WxController extends Controller
         $token=Redis::get($key);
         if($token){
 //            echo "有缓存";
-//            echo $token;it
+//            echo $token;
         }else{
 //            echo "无缓存";
             $url= "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=".env('WX_APPID')."&secret=".env('WX_APPSECRET')."";
@@ -581,18 +574,28 @@ class WxController extends Controller
      */
     public function service(){
         $access_token=$this->access_token();
+//        echo $access_token;die;
         $url="https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token=".$access_token."";
         $client=new Client();
         foreach($this->users as $k=>$v){
+//            $data = [
+//                'touser' => $v,
+//                'msgtype' => 'text',
+//                'text' => [
+//                    'content' => 'shabiwuyanhui'
+//                ]
+//            ];
             $data=[
-                'toUser'=>$v,
-                'MsgType'=>'video',
+                'touser'=>$v,
+                'msgtype'=>'video',
                 'video'=>[
-                    'media_id'=>'XnRbpDEZAXQ0tZqO-9EDVtP65_Pe4AA_m2h6Z0uyC3h1MY-BZ2zdtXdrLwa7FMe5',
+                    'media_id'=>'5MgKg4feEB-ydef4rmo1eQz50-bKYObccFoJf9xFuS-NSRGXXaW5aQHO-Azrownm',
                     'title'=>"永不失联的爱",
                     'description'=>"珍惜",
                 ],
             ];
+//            $data=json_encode($data,JSON_UNESCAPED_UNICODE);
+//            dd($data);
             $respones=$client->request('POST',$url,[
                 'verify'=>false,
                 'body'=>json_encode($data,JSON_UNESCAPED_UNICODE),

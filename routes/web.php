@@ -118,7 +118,7 @@ Route::get('/web_auth','index\WxController@wxWebAuth');
 //微信授权后跳转
 Route::get('/web_redirect','index\WxController@wxWebRedirect');
 //客服发送消息
-Route::get('/service','index\WxController@service');
+Route::post('/service','index\WxController@service');
 
 
 //测试1
