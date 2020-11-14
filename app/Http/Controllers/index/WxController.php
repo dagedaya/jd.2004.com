@@ -577,6 +577,7 @@ class WxController extends Controller
 //        dd($access_token);
 //        echo $access_token;die;
         $url="https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token=".$access_token."";
+//        dd($url);
         $client=new Client();
         foreach($this->users as $k=>$v){
             //文本
@@ -588,25 +589,26 @@ class WxController extends Controller
 //                ]
 //            ];
             //视频
-//            $data=[
-//                'touser'=>$v,
-//                'msgtype'=>'video',
-//                'video'=>[
-//                    'media_id'=>'5MgKg4feEB-ydef4rmo1eQz50-bKYObccFoJf9xFuS-NSRGXXaW5aQHO-Azrownm',
-//                    'title'=>"永不失联的爱",
-//                    'description'=>"珍惜",
-//                ],
-//            ];
-            //音乐
             $data=[
                 'touser'=>$v,
-                'msgtype'=>"music",
-                'music'=>[
-                    'title'=>'云与海',
-                    'description'=>'嗯呐',
-                    'musicurl'=>'http://2004dageda.wwwzy.top/static/music/1.mp3',
+                'msgtype'=>'video',
+                'video'=>[
+                    'media_id'=>'5MgKg4feEB-ydef4rmo1eQz50-bKYObccFoJf9xFuS-NSRGXXaW5aQHO-Azrownm',
+                    'title'=>"永不失联的爱",
+                    'description'=>"珍惜",
                 ],
             ];
+            //音乐
+//            $data=[
+//                'touser'=>$v,
+//                'msgtype'=>"music",
+//                'music'=>[
+//                    'title'=>'云与海',
+//                    'description'=>'嗯呐',
+//                    'musicurl'=>'http://2004dageda.wwwzy.top/static/music/1.mp3',
+//                    'thumb_media_id'=>"",
+//                ],
+//            ];
 //            $data=json_encode($data,JSON_UNESCAPED_UNICODE);
 //            dd($data);
             $respones=$client->request('POST',$url,[
