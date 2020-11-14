@@ -73,13 +73,13 @@ class WxController extends Controller
                                     return $result;
                                     break;
                                 case "DAILY";  //二级每日推荐(商城商品)
-                                    $recommend=GoodsModel::inRandomOrder()->take(1)->first()->toArray();
-                                    $url="http://2004dageda.wwwhb.wenao.top/".'detail?id='.$recommend['goods_id'];
+//                                    $recommend=GoodsModel::inRandomOrder()->first()->toArray(); //随机从数据库获取数据
+                                    $url="http://2004dageda.wwwhb.wenao.top/".'detail?id=217';
                                     //上传素材
-                                    $content="XbK76IO9SsKCnctnFy0iOaZf55mA8Xoq6gw_kr_aZ6K2O06SgwCEUSDNKGVnhDDQ";
+                                    $PicUrl="http://2004dageda.wwwhb.wenao.top/static/img/ad.jpg";
                                     $title="每日推荐";
-                                    $description=$recommend['keywords'];
-                                    $result=$this->img_text($toUser,$fromUser,$title,$description,$content,$url);
+                                    $description="每日推荐";
+                                    $result=$this->img_text($toUser,$fromUser,$title,$description,$PicUrl,$url);
                                     return $result;
                                     break;
                             }
@@ -340,7 +340,7 @@ class WxController extends Controller
      * @param $url
      * @return string
      */
-    private function img_text($toUser, $fromUser, $title, $description, $content, $url){
+    private function img_text($toUser, $fromUser, $title, $description, $PicUrl, $url){
         $template="<xml>
               <ToUserName><![CDATA[%s]]></ToUserName>
               <FromUserName><![CDATA[%s]]></FromUserName>
@@ -356,7 +356,7 @@ class WxController extends Controller
                 </item>
               </Articles>
             </xml>";
-        $info=sprintf($template,$toUser,$fromUser,time(),'new',1,$title,$description,$content,$url);
+        $info=sprintf($template,$toUser,$fromUser,time(),'new',1,$title,$description,$PicUrl,$url);
         return $info;
     }
     /**
