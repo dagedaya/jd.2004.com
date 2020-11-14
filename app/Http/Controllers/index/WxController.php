@@ -73,14 +73,13 @@ class WxController extends Controller
                                     return $result;
                                     break;
                                 case "DAILY";  //二级每日推荐(商城商品)
-//                                    $recommend=GoodsModel::inRandomOrder()->first()->toArray(); //随机从数据库获取数据
-                                    $url="http://2004dageda.wwwhb.wenao.top/".'detail?id=217';
+                                    $recommend=GoodsModel::inRandomOrder()->take(1)->first()->toArray(); //随机从数据库获取数据
+                                    $url="http://2004dageda.wwwhb.wenao.top/".'detail?id='.$recommend['goods_id'];
                                     //上传素材
                                     $PicUrl="http://2004dageda.wwwhb.wenao.top/static/img/ad.jpg";
                                     $title="每日推荐";
                                     $description="每日推荐";
-                                    $content=$this->img_text($toUser,$fromUser,$title,$description,$PicUrl,$url);
-                                    $result=$this->text($toUser,$fromUser,$content);
+                                    $result=$this->img_text($toUser,$fromUser,$title,$description,$PicUrl,$url);
                                     return $result;
                                     break;
                             }
