@@ -588,7 +588,7 @@ class WxController extends Controller
                 'toUser'=>$v,
                 'MsgType'=>'video',
                 'video'=>[
-                    'media_id'=>'BZ2zdtXdrLwa7FMe5',
+                    'media_id'=>'XnRbpDEZAXQ0tZqO-9EDVtP65_Pe4AA_m2h6Z0uyC3h1MY-BZ2zdtXdrLwa7FMe5',
                     'title'=>"永不失联的爱",
                     'description'=>"珍惜",
                 ],
