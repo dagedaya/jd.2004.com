@@ -76,7 +76,7 @@ class WxController extends Controller
                                     $recommend=GoodsModel::inRandomOrder()->take(1)->first()->toArray(); //随机从数据库获取数据
                                     $url="http://2004dageda.wwwhb.wenao.top/".'detail?id='.$recommend['goods_id'];
                                     //上传素材
-                                    $PicUrl="YssCuc52o273jQfEn9qSHwe1pmMXeR6Fn6g40V6fGWw7tvQHfIjaW82lGrucp0L7";
+                                    $PicUrl=$recommend['goods_img'];
                                     $title="每日推荐";
                                     $description=$recommend['keywords'];
                                     $result=$this->img_text($toUser,$fromUser,$title,$description,$PicUrl,$url);
