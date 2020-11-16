@@ -121,6 +121,20 @@ Route::get('/web_redirect','index\WxController@wxWebRedirect');
 Route::post('/service','index\WxController@service');
 
 
+/**
+ * 小程序
+ */
+Route::prefix('/api')->group(function (){
+    Route::get('/test','weixin\ApiController@test');
+});
+
+
+
+
+
+/**
+ * 测试
+ */
 //测试1
 Route::get('/weather','index\WxController@weather');
 //测试2
