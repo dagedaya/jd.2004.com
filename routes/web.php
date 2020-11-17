@@ -125,7 +125,8 @@ Route::post('/service','index\WxController@service');
  * 小程序
  */
 Route::prefix('/api')->group(function (){
-    Route::get('/test','weixin\ApiController@test');
+    Route::get('/test','weixin\ApiController@test');//首页
+    Route::get('/getcode','weixin\ApiController@getcode');//登录
 });
 
 
