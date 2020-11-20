@@ -1,0 +1,34 @@
+.slideshow{
+    border:1px solid red;
+    height:200px;
+    background-color: #00ca6d;
+}
+.nav{
+    border:1px solid blue;
+    margin-top:10px;
+}
+.nav span{
+    margin-left:60px;
+}
+#a{
+    background-color: #a5dc86;
+}
+#b{
+    background-color: #a5dc86;
+}
+#c{
+    background-color: #a5dc86;
+}
+#d{
+    background-color: #a5dc86;
+}
+#e{
+    background-color: #a5dc86;
+}
+#f{
+    background-color: #a5dc86;
+}
+.item{
+    /*border:1px solid black;*/
+    margin-top:10px;
+}

@@ -127,6 +127,9 @@ Route::post('/service','index\WxController@service');
 Route::prefix('/api')->group(function (){
     Route::get('/test','weixin\ApiController@test');//首页
     Route::get('/getcode','weixin\ApiController@getcode');//登录
+    Route::get('/goods','weixin\ApiController@goods');//获取商品信息
+    Route::get('/goods_details','weixin\ApiController@goods_details');//根据id获取商品信息
+    Route::get('/GoodsList','weixin\ApiController@GoodsList');//触底刷新
 });
 
 
