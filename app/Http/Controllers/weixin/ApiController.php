@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redis;
 use App\Model\XcxUserModel;
 use App\IndexModel\GoodsModel;
+use App\Model\XcxCartModel;
 
 class ApiController extends Controller
 {
@@ -118,6 +119,30 @@ class ApiController extends Controller
                 'list'=>$goods_list->items()
             ]
         ];
+        return $response;
+    }
+    /**
+     * 加入购物车
+     */
+    public function cart(Request $request){
+        $goods_id=$request->get('goods_id');
+        $cartInfo=[
+            'goods_id'=>$goods_id,
+            'add_time'=>time(),
+            'user_id'=>5,
+        ];
+        $res=XcxCartModel::insert($cartInfo);
+        if($res){
+            $response=[
+                'error'=>0,
+                'msg'=>"加入购物车成功",
+            ];
+        }else{
+            $response=[
+                'error'=>500001,
+                'msg'=>"加入失败",
+            ];
+        }
         return $response;
     }
 }
