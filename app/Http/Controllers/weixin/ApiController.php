@@ -33,6 +33,8 @@ class ApiController extends Controller
     //获取code换取session_key和openid
     public function getcode(Request $request){
       $code=$request->get('code');
+    //获取用户信息
+    $userInfo=json_decode(file_get_contents('php://input'),true);
       $url="https://api.weixin.qq.com/sns/jscode2session?appid=".env('WX_XCX_APPID')."&secret=".env('WX_XCX_APPSECRET')."&js_code=".$code."&grant_type=authorization_code";
       $data=json_decode(file_get_contents($url),true);
 //      echo '<pre>';print_r($data);echo '</pre>';
@@ -43,7 +45,35 @@ class ApiController extends Controller
                 'msg'=>'登录失败',
             ];
         }else{
-            XcxUserModel::insert(['openid'=>$data['openid']]);
+            $openid=$data['openid'];
+            $res=XcxUserModel::where('openid',$openid)->first();
+            if($res){
+                //TODO用户信息已存在
+                $user_id=$res['user_id'];
+                $response=[
+                    'error'=>0,
+                    'msg'=>'用户信息已存在 '
+                ];
+            }else{
+                //新用户入库
+                $u_info=[
+                    'openid'=>$openid,
+                    'nickname'=>$userInfo['u']['nickName'],
+                    'sex'=>$userInfo['u']['gender'],
+                    'language'=>$userInfo['u']['language'],
+                    'city'=>$userInfo['u']['city'],
+                    'province'=>$userInfo['u']['province'],
+                    'country'=>$userInfo['u']['country'],
+                    'headimgurl'=>$userInfo['u']['avatarUrl'],
+                    'add_time'=>time(),
+                ];
+                $res=XcxUserModel::insertGetId($u_info);
+                $response=[
+                    'error'=>200,
+                    'msg'=>'入库成功'
+                ];
+//            XcxUserModel::insert(['openid'=>$data['openid']]);
+            }
             $token=sha1($data['openid'].$data['session_key'].mt_rand(0,999999));
             //保存token
             $redis_login_hash="h:xcx:login:".$token;
@@ -129,7 +159,7 @@ class ApiController extends Controller
         $cartInfo=[
             'goods_id'=>$goods_id,
             'add_time'=>time(),
-            'user_id'=>5,
+//            'user_id'=>$user_id,
         ];
         $res=XcxCartModel::insert($cartInfo);
         if($res){
