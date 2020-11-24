@@ -175,7 +175,7 @@ class ApiController extends Controller
         return $response;
     }
     /**
-     * 购物车列表页
+     * 购物车列表页(展示)
      */
     public function list(Request $request){
         $str = "[{\"merchantInfo\":{\"merchantId\":\"111\",\"name\":\"这是我家的小小小店\",\"icon\":\"/assets/images/cart_none_a.png\",\"hasSelected\":false,\"isActivity\":true},\"goodsList\":[{\"merchantId\":\"111\",\"quantity\":4,\"quantityUpdatable\":false,\"hasSelected\":false,\"id\":\"217\",\"title\":\"电脑\",\"price\":50000,\"goods_img\":\"https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1995828843,2702670661&fm=26&gp=0.jpg\"}]},{\"merchantInfo\":{\"merchantId\":\"112\",\"name\":\"这是我家的小小小店\",\"icon\":\"/assets/images/cart_none_a.png\",\"hasSelected\":false,\"isActivity\":true},\"goodsList\":[{\"merchantId\":\"111\",\"quantity\":4,\"quantityUpdatable\":false,\"hasSelected\":false,\"id\":\"218\",\"title\":\"电脑\",\"price\":50000,\"goods_img\":\"https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1995828843,2702670661&fm=26&gp=0.jpg\"}]}]";
