@@ -174,4 +174,60 @@ class ApiController extends Controller
         }
         return $response;
     }
+    /**
+     * 购物车列表页
+     */
+    public function list(Request $request){
+        $str = "[{\"merchantInfo\":{\"merchantId\":\"111\",\"name\":\"这是我家的小小小店\",\"icon\":\"/assets/images/cart_none_a.png\",\"hasSelected\":false,\"isActivity\":true},\"goodsList\":[{\"merchantId\":\"111\",\"quantity\":4,\"quantityUpdatable\":false,\"hasSelected\":false,\"id\":\"217\",\"title\":\"电脑\",\"price\":50000,\"goods_img\":\"https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1995828843,2702670661&fm=26&gp=0.jpg\"}]},{\"merchantInfo\":{\"merchantId\":\"112\",\"name\":\"这是我家的小小小店\",\"icon\":\"/assets/images/cart_none_a.png\",\"hasSelected\":false,\"isActivity\":true},\"goodsList\":[{\"merchantId\":\"111\",\"quantity\":4,\"quantityUpdatable\":false,\"hasSelected\":false,\"id\":\"218\",\"title\":\"电脑\",\"price\":50000,\"goods_img\":\"https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1995828843,2702670661&fm=26&gp=0.jpg\"}]}]";
+//        dd(json_decode($str,true));
+        //获取token,根据token找到openid,根据openid找到user_i
+        $token=$request->get('token');
+        $key="h:xcx:login:".$token;
+        //取出openid
+        $token1=Redis::hgetall($key);
+        $openid=$token1['openid'];
+        $user_id=XcxUserModel::where('openid',$openid)->select('user_id')->first()->toArray();
+        $user_id = $user_id['user_id'];
+        //查询购物车列表(根据user_id查找购物车列表)
+        $list=XcxCartModel::where('user_id',$user_id)->get()->toArray();
+        $data=[];
+        foreach ($list as $k=>$v){
+            $goods_id=$v['goods_id'];
+            $goodsInfo=GoodsModel::select('goods_name','shop_price','goods_img')->find($goods_id);
+            if(is_object($goodsInfo)){
+                $goodsInfo=$goodsInfo->toArray();
+            }
+            $arr=[
+                'merchantId'=>"111",
+              'quantity'=>4,
+              'quantityUpdatable'=>false,
+              'hasSelected'=>false,
+                'id'=>"$goods_id",
+                'title'=>$goodsInfo['goods_name'],
+                'price'=>$goodsInfo['shop_price'],
+                'goods_img'=>$goodsInfo['goods_img']
+            ];
+            $data[] = [
+                'merchantInfo'=>[
+                    'merchantId'=>"111",
+                    'name'=>"这是我家的小小小店",
+                    'icon'=>'/assets/images/cart_none_a.png',
+                    'hasSelected'=>false,
+                    'isActivity'=>true
+                ],
+                'goodsList'=>[$arr]
+            ];
+        }
+
+//        dd($data);
+        $result=[
+            'error'=>0,
+            'msg'=>'查询购物车列表成功',
+            'data'=>[
+                'list'=>$data,
+            ],
+        ];
+        return $result;
+
+    }
 }

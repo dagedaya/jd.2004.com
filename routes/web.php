@@ -131,6 +131,7 @@ Route::prefix('/api')->group(function (){
     Route::get('/goods_details','weixin\ApiController@goods_details');//根据id获取商品信息
     Route::get('/GoodsList','weixin\ApiController@GoodsList');//触底刷新
     Route::get('Cart','weixin\ApiController@Cart');//加入购物车
+    Route::get('list','weixin\ApiController@list');//购物车列表
 });
 
 
