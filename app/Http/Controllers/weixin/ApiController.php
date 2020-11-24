@@ -50,10 +50,7 @@ class ApiController extends Controller
             if($res){
                 //TODO用户信息已存在
                 $user_id=$res['user_id'];
-                $response=[
-                    'error'=>0,
-                    'msg'=>'用户信息已存在 '
-                ];
+//                return $user_id;
             }else{
                 //新用户入库
                 $u_info=[
@@ -68,11 +65,6 @@ class ApiController extends Controller
                     'add_time'=>time(),
                 ];
                 $res=XcxUserModel::insertGetId($u_info);
-                $response=[
-                    'error'=>200,
-                    'msg'=>'入库成功'
-                ];
-//            XcxUserModel::insert(['openid'=>$data['openid']]);
             }
             $token=sha1($data['openid'].$data['session_key'].mt_rand(0,999999));
             //保存token
@@ -82,7 +74,8 @@ class ApiController extends Controller
                 'user_name'=>'李明',
                 'login_time'=>time(),
                 'login_ip'=>$request->getClientIp(),
-                'token'=>$token
+                'token'=>$token,
+                'openid'=>$openid
             ];
             //保存登录的信息
             Redis::hMset($redis_login_hash,$loginInfo);
@@ -156,10 +149,16 @@ class ApiController extends Controller
      */
     public function cart(Request $request){
         $goods_id=$request->get('goods_id');
+        //接收token
+        $token=$request->get('token');
+        $key="h:xcx:login:".$token;
+        //取出openid
+        $token=Redis::hgetall($key);
+        $user_id=XcxUserModel::where('openid',$token['openid'])->select('user_id')->first();
         $cartInfo=[
             'goods_id'=>$goods_id,
             'add_time'=>time(),
-//            'user_id'=>$user_id,
+            'user_id'=>$user_id->user_id,
         ];
         $res=XcxCartModel::insert($cartInfo);
         if($res){
