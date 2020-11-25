@@ -132,6 +132,8 @@ Route::prefix('/api')->group(function (){
     Route::get('/GoodsList','weixin\ApiController@GoodsList');//触底刷新
     Route::get('Cart','weixin\ApiController@Cart');//加入购物车
     Route::get('list','weixin\ApiController@list');//购物车列表
+    Route::get('/collect','weixin\ApiController@collect');//加入收藏
+    Route::get('/collect1','weixin\ApiController@collect1');//取消收藏
 });
 
 

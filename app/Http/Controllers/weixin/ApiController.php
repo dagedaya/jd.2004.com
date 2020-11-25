@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Redis;
 use App\Model\XcxUserModel;
 use App\IndexModel\GoodsModel;
 use App\Model\XcxCartModel;
+use App\Model\CollectModel;
 
 class ApiController extends Controller
 {
@@ -47,9 +48,10 @@ class ApiController extends Controller
         }else{
             $openid=$data['openid'];
             $res=XcxUserModel::where('openid',$openid)->first();
+            $user_id = $res['user_id'];
             if($res){
                 //TODO用户信息已存在
-                $user_id=$res['user_id'];
+                $user_id1=$res['user_id'];
 //                return $user_id;
             }else{
                 //新用户入库
@@ -64,13 +66,13 @@ class ApiController extends Controller
                     'headimgurl'=>$userInfo['u']['avatarUrl'],
                     'add_time'=>time(),
                 ];
-                $res=XcxUserModel::insertGetId($u_info);
+                $user_id=XcxUserModel::insertGetId($u_info);
             }
             $token=sha1($data['openid'].$data['session_key'].mt_rand(0,999999));
             //保存token
             $redis_login_hash="h:xcx:login:".$token;
             $loginInfo=[
-                'uid'=>'1234',
+                'uid'=>$user_id,
                 'user_name'=>'李明',
                 'login_time'=>time(),
                 'login_ip'=>$request->getClientIp(),
@@ -109,7 +111,37 @@ class ApiController extends Controller
         $goods_id=$request->get('id');
         if(!empty($goods_id)){
             $detail=GoodsModel::where('goods_id',$goods_id)->first()->toArray();
-            return $detail;
+            // 默认为该用户 未收藏
+            $iscollect = false;
+            // 查询该商品有没有被用户收藏
+            $token=$request->get('access_token');
+            if(!empty($token)){
+                $key="h:xcx:login:".$token;
+                //取出openid
+                $token1=Redis::hgetall($key);
+                $openid=$token1['openid'];
+                $user_id=XcxUserModel::where('openid',$openid)->select('user_id')->first()->toArray();
+                $user_id = $user_id['user_id'];
+                $collectInfo=CollectModel::where('user_id',$user_id)->select('goods_id')->get();
+                if(is_object($collectInfo)){
+                    $collectInfo = $collectInfo->toArray();
+                }
+                foreach ($collectInfo as $k=>$v){
+                    if($v['goods_id'] == $goods_id){
+                        // 如果当前访问的商品id === 收藏表中的id 则赋值为 收藏为 true
+                        $iscollect = true;
+                    }
+                }
+            }
+            $result = [
+                'error' =>  0,
+                'msg'   =>  'ok',
+                'data'  =>  [
+                    'list'  =>  $detail,
+                    'iscollect' => $iscollect,
+                ]
+            ];
+            return $result;
         }else{
             $token=$request->get('access_token');
 //        //验证token是否有效
@@ -149,16 +181,16 @@ class ApiController extends Controller
      */
     public function cart(Request $request){
         $goods_id=$request->get('goods_id');
+        //商品价格
+        $price=GoodsModel::find($goods_id)->shop_price;
         //接收token
         $token=$request->get('token');
-        $key="h:xcx:login:".$token;
-        //取出openid
-        $token=Redis::hgetall($key);
-        $user_id=XcxUserModel::where('openid',$token['openid'])->select('user_id')->first();
+        $user_id = $this->getuserid($token);
         $cartInfo=[
             'goods_id'=>$goods_id,
             'add_time'=>time(),
-            'user_id'=>$user_id->user_id,
+            'user_id'=>$user_id,
+            'shop_price'=>$price,
         ];
         $res=XcxCartModel::insert($cartInfo);
         if($res){
@@ -229,5 +261,71 @@ class ApiController extends Controller
         ];
         return $result;
 
+    }
+    /**
+     * 加入收藏
+     */
+    public function collect(Request $request){
+        //接收商品id和token
+        $goods_id=$request->get('id');
+        $token=$request->get('token');
+        $user_id = $this->getuserid($token);
+        //加入收藏（存入数据库）
+        $collect=[
+            'goods_id'=>$goods_id,
+            'user_id'=>$user_id,
+            'add_time'=>time(),
+        ];
+        $collectInfo=CollectModel::insert($collect);
+        if($collectInfo){
+            $response=[
+                'error'=>0,
+                'msg'=>'ok',
+            ];
+        }else{
+            $response=[
+                'error'=>500001,
+                'msg'=>'收藏失败',
+            ];
+        }
+        return $response;
+        //加入收藏（redis的有序集合）
+//        $redis_key='goods_id:collect:'.$user_id;//用户收藏的商品有序集合
+//        Redis::Zadd($redis_key,time(),$goods_id);//将商品id加入有序集合，并给排序值
+//        $response=[
+//            'error'=>0,
+//            'msg'=>'ok',
+//        ];
+//        return $response;
+    }
+    /**
+     * 取消收藏
+     */
+    public function collect1(Request $request){
+        //接收商品id和token
+        $goods_id=$request->get('id');
+        $token=$request->get('token');
+        $user_id = $this->getuserid($token);
+        $collectInfo=CollectModel::where(['goods_id'=>$goods_id,'user_id'=>$user_id])->delete();
+        if($collectInfo){
+            $response=[
+                'error'=>0,
+                'msg'=>'no',
+            ];
+        }else{
+            $response=[
+                'error'=>500001,
+                'msg'=>'取消收藏失败',
+            ];
+        }
+        return $response;
+    }
+    //获取user_id
+    private function getuserid($token){
+        $key="h:xcx:login:".$token;
+        //取出openid
+        $token1=Redis::hgetall($key);
+        $user_id = $token1['uid'];
+        return $user_id;
     }
 }
