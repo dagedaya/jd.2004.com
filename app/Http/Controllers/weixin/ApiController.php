@@ -320,7 +320,7 @@ class ApiController extends Controller
         }
         return $response;
     }
-    //获取user_id
+    //获取user_id（私有--》直接调用）
     private function getuserid($token){
         $key="h:xcx:login:".$token;
         //取出openid
