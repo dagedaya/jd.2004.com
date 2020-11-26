@@ -68,6 +68,7 @@ class ApiController extends Controller
                 ];
                 $user_id=XcxUserModel::insertGetId($u_info);
             }
+            //sha1加密相当于md5
             $token=sha1($data['openid'].$data['session_key'].mt_rand(0,999999));
             //保存token
             $redis_login_hash="h:xcx:login:".$token;
