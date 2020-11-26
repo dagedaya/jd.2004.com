@@ -116,12 +116,7 @@ class ApiController extends Controller
             // 查询该商品有没有被用户收藏
             $token=$request->get('access_token');
             if(!empty($token)){
-                $key="h:xcx:login:".$token;
-                //取出openid
-                $token1=Redis::hgetall($key);
-                $openid=$token1['openid'];
-                $user_id=XcxUserModel::where('openid',$openid)->select('user_id')->first()->toArray();
-                $user_id = $user_id['user_id'];
+               $user_id=$this->getuserid($token);
                 $collectInfo=CollectModel::where('user_id',$user_id)->select('goods_id')->get();
                 if(is_object($collectInfo)){
                     $collectInfo = $collectInfo->toArray();
