@@ -182,25 +182,32 @@ class ApiController extends Controller
         //接收token
         $token=$request->get('token');
         $user_id = $this->getuserid($token);
-        $cartInfo=[
-            'goods_id'=>$goods_id,
-            'add_time'=>time(),
-            'user_id'=>$user_id,
-            'shop_price'=>$price,
-        ];
-        $res=XcxCartModel::insert($cartInfo);
-        if($res){
-            $response=[
-                'error'=>0,
-                'msg'=>"加入购物车成功",
-            ];
+        //查询有没有这个商品
+        $shop=XcxCartModel::where(['goods_id'=>$goods_id,'user_id'=>$user_id])->first();
+        if($shop){
+            XcxCartModel::where('goods_id',$goods_id)->increment('goods_num');
         }else{
-            $response=[
-                'error'=>500001,
-                'msg'=>"加入失败",
+            $cartInfo=[
+                'goods_id'=>$goods_id,
+                'add_time'=>time(),
+                'user_id'=>$user_id,
+                'shop_price'=>$price,
+                'goods_num'=>1,
             ];
+            $res=XcxCartModel::insert($cartInfo);
+            if($res){
+                $response=[
+                    'error'=>0,
+                    'msg'=>"加入购物车成功",
+                ];
+            }else{
+                $response=[
+                    'error'=>500001,
+                    'msg'=>"增加了一个亲",
+                ];
+            }
+            return $response;
         }
-        return $response;
     }
     /**
      * 购物车列表页(展示)
@@ -218,45 +225,28 @@ class ApiController extends Controller
         $user_id = $user_id['user_id'];
         //查询购物车列表(根据user_id查找购物车列表)
         $list=XcxCartModel::where('user_id',$user_id)->get()->toArray();
+        //查询购物车表总数居
+        $count=XcxCartModel::count();
         $data=[];
         foreach ($list as $k=>$v){
             $goods_id=$v['goods_id'];
-            $goodsInfo=GoodsModel::select('goods_name','shop_price','goods_img')->find($goods_id);
+            $goodsInfo=GoodsModel::select('p_goods.goods_id','goods_name','p_goods.shop_price','goods_img',"goods_num")
+                ->leftjoin("p_xcx_cart","p_goods.goods_id","=","p_xcx_cart.goods_id")
+                ->find($goods_id);
             if(is_object($goodsInfo)){
                 $goodsInfo=$goodsInfo->toArray();
             }
-            $arr=[
-                'merchantId'=>"111",
-              'quantity'=>4,
-              'quantityUpdatable'=>false,
-              'hasSelected'=>false,
-                'id'=>"$goods_id",
-                'title'=>$goodsInfo['goods_name'],
-                'price'=>$goodsInfo['shop_price'],
-                'goods_img'=>$goodsInfo['goods_img']
-            ];
-            $data[] = [
-                'merchantInfo'=>[
-                    'merchantId'=>"111",
-                    'name'=>"这是我家的小小小店",
-                    'icon'=>'/assets/images/cart_none_a.png',
-                    'hasSelected'=>false,
-                    'isActivity'=>true
-                ],
-                'goodsList'=>[$arr]
-            ];
+            $data[] = $goodsInfo;
         }
-
-//        dd($data);
         $result=[
             'error'=>0,
             'msg'=>'查询购物车列表成功',
             'data'=>[
                 'list'=>$data,
+                'count'=>$count,
             ],
         ];
         return $result;
-
     }
     /**
      * 加入收藏
@@ -314,6 +304,85 @@ class ApiController extends Controller
                 'msg'=>'取消收藏失败',
             ];
         }
+        return $response;
+    }
+    /**
+     * 购物车减去一件商品
+     * @param $token
+     * @return mixed
+     */
+    public function decr(Request $request){
+        $goods_id=$request->get('goods_id');
+        //查询购物车表
+        $cart=XcxCartModel::where('goods_id',$goods_id)->first()->toArray();
+        if($cart){
+            $res=[
+                'goods_num'=>$cart['goods_num']-1,//数量减一
+            ];
+            $decr=XcxCartModel::where('goods_id',$goods_id)->update($res);
+        }
+        $response=[
+            'error'=>0,
+            'msg'=>'ok',
+            'data'=>[
+                'list'=>$decr,
+            ],
+        ];
+        return $response;
+    }
+    /**
+     * 购物车添加一条商品
+     * @param $token
+     * @return mixed
+     */
+    public function add(Request $request){
+        $goods_id=$request->get('goods_id');
+        //查询购物车表
+        $cart=XcxCartModel::where('goods_id',$goods_id)->first()->toArray();
+        if($cart){
+            $res=[
+                'goods_num'=>$cart['goods_num']+1,//数量加一
+            ];
+            $add=XcxCartModel::where('goods_id',$goods_id)->update($res);
+        }
+        $response=[
+            'error'=>0,
+            'msg'=>'ok',
+            'data'=>[
+                'list'=>$add,
+            ],
+        ];
+        return $response;
+    }
+    /**
+     * 购物车删除所有商品
+     * @param $token
+     * @return mixed
+     */
+    public function delete(Request $request){
+        $token=$request->get('token');
+        $user_id=$this->getuserid($token);
+        $shop=XcxCartModel::where('user_id',$user_id)->delete();
+        $response=[
+            'error'=>0,
+            'msg'=>'ok',
+            'data'=>$shop,
+        ];
+        return $response;
+    }
+    /**
+     * 购物车单独删除
+     * @param $token
+     * @return mixed
+     */
+    public function del(Request $request){
+        $goods_id=$request->get('goods_id');
+        $del=XcxCartModel::where('goods_id',$goods_id)->delete();
+        $response=[
+            'error'=>0,
+            'msg'=>'ok',
+            'data'=>$del
+        ];
         return $response;
     }
     //获取user_id（私有--》直接调用）

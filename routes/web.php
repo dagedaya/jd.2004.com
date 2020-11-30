@@ -134,6 +134,10 @@ Route::prefix('/api')->group(function (){
     Route::get('list','weixin\ApiController@list');//购物车列表
     Route::get('/collect','weixin\ApiController@collect');//加入收藏
     Route::get('/collect1','weixin\ApiController@collect1');//取消收藏
+    Route::get('/decr','weixin\ApiController@decr');//减去一件商品
+    Route::get('/add','weixin\ApiController@add');//加入一件商品
+    Route::get('/delete','weixin\ApiController@delete');//删除所有商品
+    Route::get('/del','weixin\ApiController@del');//单独删除商品
 });
 
 
