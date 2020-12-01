@@ -185,7 +185,7 @@ class ApiController extends Controller
         //查询有没有这个商品
         $shop=XcxCartModel::where(['goods_id'=>$goods_id,'user_id'=>$user_id])->first();
         if($shop){
-            XcxCartModel::where('goods_id',$goods_id)->increment('goods_num');
+            XcxCartModel::where('goods_id',$goods_id)->increment('goods_num');//自增
         }else{
             $cartInfo=[
                 'goods_id'=>$goods_id,
@@ -213,16 +213,9 @@ class ApiController extends Controller
      * 购物车列表页(展示)
      */
     public function list(Request $request){
-        $str = "[{\"merchantInfo\":{\"merchantId\":\"111\",\"name\":\"这是我家的小小小店\",\"icon\":\"/assets/images/cart_none_a.png\",\"hasSelected\":false,\"isActivity\":true},\"goodsList\":[{\"merchantId\":\"111\",\"quantity\":4,\"quantityUpdatable\":false,\"hasSelected\":false,\"id\":\"217\",\"title\":\"电脑\",\"price\":50000,\"goods_img\":\"https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1995828843,2702670661&fm=26&gp=0.jpg\"}]},{\"merchantInfo\":{\"merchantId\":\"112\",\"name\":\"这是我家的小小小店\",\"icon\":\"/assets/images/cart_none_a.png\",\"hasSelected\":false,\"isActivity\":true},\"goodsList\":[{\"merchantId\":\"111\",\"quantity\":4,\"quantityUpdatable\":false,\"hasSelected\":false,\"id\":\"218\",\"title\":\"电脑\",\"price\":50000,\"goods_img\":\"https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1995828843,2702670661&fm=26&gp=0.jpg\"}]}]";
-//        dd(json_decode($str,true));
-        //获取token,根据token找到openid,根据openid找到user_i
+        //获取token,根据token找到openid,根据openid找到user_id
         $token=$request->get('token');
-        $key="h:xcx:login:".$token;
-        //取出openid
-        $token1=Redis::hgetall($key);
-        $openid=$token1['openid'];
-        $user_id=XcxUserModel::where('openid',$openid)->select('user_id')->first()->toArray();
-        $user_id = $user_id['user_id'];
+        $user_id = $this->getuserid($token);
         //查询购物车列表(根据user_id查找购物车列表)
         $list=XcxCartModel::where('user_id',$user_id)->get()->toArray();
         //查询购物车表总数居
@@ -314,10 +307,15 @@ class ApiController extends Controller
     public function decr(Request $request){
         $goods_id=$request->get('goods_id');
         //查询购物车表
-        $cart=XcxCartModel::where('goods_id',$goods_id)->first()->toArray();
-        if($cart){
+        $cart=XcxCartModel::where('goods_id',$goods_id)->value('goods_num');
+        if($cart>1){
             $res=[
-                'goods_num'=>$cart['goods_num']-1,//数量减一
+                'goods_num'=>$cart-1,//数量减一
+            ];
+            $decr=XcxCartModel::where('goods_id',$goods_id)->update($res);
+        }else{
+            $res=[
+                'goods_num'=>1,//数量减一
             ];
             $decr=XcxCartModel::where('goods_id',$goods_id)->update($res);
         }
@@ -360,15 +358,33 @@ class ApiController extends Controller
      * @return mixed
      */
     public function delete(Request $request){
+        $goods_id=$request->post('goods_id');
+        $goods_arr =  explode(',',$goods_id);
         $token=$request->get('token');
         $user_id=$this->getuserid($token);
-        $shop=XcxCartModel::where('user_id',$user_id)->delete();
-        $response=[
-            'error'=>0,
-            'msg'=>'ok',
-            'data'=>$shop,
-        ];
+        $res = XcxCartModel::where(['user_id'=>$user_id])->whereIn('goods_id',$goods_arr)->delete();
+        if($res)        //删除成功
+        {
+            $response = [
+                'errno' => 0,
+                'msg'   => 'ok'
+            ];
+        }else{
+            $response = [
+                'errno' => 500002,
+                'msg'   => '内部错误'
+            ];
+        }
         return $response;
+//        $token=$request->get('token');
+//        $user_id=$this->getuserid($token);
+//        $shop=XcxCartModel::where('user_id',$user_id)->delete();
+//        $response=[
+//            'error'=>0,
+//            'msg'=>'ok',
+//            'data'=>$shop,
+//        ];
+//        return $response;
     }
     /**
      * 购物车单独删除
