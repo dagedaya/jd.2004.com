@@ -640,11 +640,11 @@ class WxController extends Controller
         if($json['code']==200){
             $content="";
             foreach($json['newslist'] as $k=>$v){
-                $content=$v['pinyin'];
+                $content.=$v['pinyin'];
             }
+            Log::info('===='.$content);
+            return $content;
         }
-        Log::info('===='.$content);
-        return $content;
     }
 //    private function text($toUser,$fromUser,$content)
 //    {
