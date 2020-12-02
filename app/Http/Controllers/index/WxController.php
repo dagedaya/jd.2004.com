@@ -638,13 +638,12 @@ class WxController extends Controller
 //        }else{
 //            echo "返回错误，状态消息：".$json['msg'];
 //        }
-//        dd($json['newslist']);
         if($json['code']==200){
             $content="";
             foreach($json['newslist'] as $k=>$v){
-                $content=$v['pinyin'];
+                $content.='全称:'.$v['pinyin'].'简称:'.$v['jianxie'];
             }
-//            Log::info('===='$content);
+            Log::info('===='.$content);
             return $content;
         }
     }
