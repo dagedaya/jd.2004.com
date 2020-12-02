@@ -135,7 +135,7 @@ class WxController extends Controller
 //                    echo "";
 //                    die;
                     switch ($data->Content){
-                        case '你好':
+                        case '嘻嘻':
                             $category=1;
                             $content=$this->chinese();
                             break;
@@ -628,19 +628,22 @@ class WxController extends Controller
      * 汉字转拼音
      */
     public function chinese(){
-        $content='你好';
+        $content='嘻嘻';
         $data=file_get_contents('http://api.tianapi.com/txapi/pinyin/index?key='.env('WX_APIKEY').'&text='.$content.' ');//api接口
-        $content=json_decode($data,true);//将json解析成数组
+        $json=json_decode($data,true);//将json解析成数组
 //        if($json['code'] == 200){ //判断状态码
 //            print_r($json); //打印数组
 //        }else{
 //            echo "返回错误，状态消息：".$json['msg'];
 //        }
 //        dd($json['newslist']);
-//        $content="";
-//        foreach($json['newslist'] as $k=>$v){
-//            $content=$v['pinyin'];
-//        }
+        if($json['code']==200){
+            $content="";
+            foreach($json['newslist'] as $k=>$v){
+                $content=$v['pinyin'];
+            }
+        }
+        Log::info('===='.$content);
         return $content;
     }
 //    private function text($toUser,$fromUser,$content)
