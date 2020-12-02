@@ -32,7 +32,6 @@ use App\IndexModel\MediaModel;
 use Log;
 use Illuminate\Support\Str;
 use App\IndexModel\GoodsModel;
-use App\IndexModel\HistoryModel;
 class WxController extends Controller
 {
     protected $users=[
@@ -522,7 +521,7 @@ class WxController extends Controller
 //                        ],
                         [
                             'type'=>'view',
-                            'name'=>'百度',
+                            'name'=>'历史记录',
                             'url'=>'https://www.baidu.com'
                         ],
                         [
@@ -656,9 +655,9 @@ class WxController extends Controller
     /**
      * 查询历史
      */
-    public function history(){
-       echo "1";
-    }
+//    public function history(){
+//       echo "1";
+//    }
 //    private function text($toUser,$fromUser,$content)
 //    {
 //        $template = "<xml>
