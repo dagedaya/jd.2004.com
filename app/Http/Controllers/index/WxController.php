@@ -636,11 +636,11 @@ class WxController extends Controller
 //        }else{
 //            echo "返回错误，状态消息：".$json['msg'];
 //        }
+//        dd($json['newslist']);
         $content="";
         foreach($json['newslist'] as $k=>$v){
             $content=$v['pinyin'];
         }
-        Log::info('===='.$content);
         return $content;
     }
 //    private function text($toUser,$fromUser,$content)
