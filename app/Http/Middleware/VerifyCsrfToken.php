@@ -20,15 +20,7 @@ class VerifyCsrfToken extends Middleware
      */
     protected $except = [
         //
-        '*',
-        '/chinese',
+        'v1/*',
+//        '/chinese',
     ];
-
-    public function a($request, Closure $next)
-    {
-        // 使用CSRF
-        return parent::handle($request, $next);
-        // 禁用CSRF
-        return $next($request);
-    }
 }
