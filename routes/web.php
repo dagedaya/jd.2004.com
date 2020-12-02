@@ -121,6 +121,8 @@ Route::get('/web_redirect','index\WxController@wxWebRedirect');
 Route::post('/service','index\WxController@service');
 //汉字转拼音
 Route::math(['get','post'],'/chinese','index\WxController@chinese');
+//查询历史
+Route::get('/history','index\WxController@history');
 
 
 

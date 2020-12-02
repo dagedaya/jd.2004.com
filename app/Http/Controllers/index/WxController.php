@@ -32,6 +32,7 @@ use App\IndexModel\MediaModel;
 use Log;
 use Illuminate\Support\Str;
 use App\IndexModel\GoodsModel;
+use App\IndexModel\HistoryModel;
 class WxController extends Controller
 {
     protected $users=[
@@ -516,6 +517,11 @@ class WxController extends Controller
                     "sub_button"=>[
                         [
                             'type'=>'view',
+                            'name'=>'查询历史',
+                            'url'=>'http://jd.2004.com/history'
+                        ],
+                        [
+                            'type'=>'view',
                             'name'=>'百度',
                             'url'=>'https://www.baidu.com'
                         ],
@@ -646,6 +652,12 @@ class WxController extends Controller
             Log::info('===='.$content);
             return $content;
         }
+    }
+    /**
+     * 查询历史
+     */
+    public function history(){
+       echo "1";
     }
 //    private function text($toUser,$fromUser,$content)
 //    {
