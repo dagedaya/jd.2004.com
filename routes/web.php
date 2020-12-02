@@ -69,7 +69,7 @@ Route::get('prize/index','index\PrizeController@index');//抽奖视图
 Route::get('prize/add','index\PrizeController@add');//开始抽奖
 Route::get('prize/ceshi','index\PrizeController@ceshi');//测试
 
-    //电影购买系统
+//电影购买系统
 Route::get('test/movie','index\TestController@movie');//视图
 Route::get('test/movieadd','index\TestController@movieadd');
 
@@ -119,6 +119,10 @@ Route::get('/web_auth','index\WxController@wxWebAuth');
 Route::get('/web_redirect','index\WxController@wxWebRedirect');
 //客服发送消息
 Route::post('/service','index\WxController@service');
+//汉字转拼音
+Route::get('/chinese','index\WxController@chinese');
+
+
 
 
 /**

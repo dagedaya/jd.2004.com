@@ -36,6 +36,8 @@ class WxController extends Controller
 {
     protected $users=[
         'onun_5lLzel17JvjX1tQiJH40eno',
+        'onun_5khx1uTIPCU2Kjb3we0lvmY',
+        'onun_5uHxUjUGizidAdLb9jpM3cs',
     ];
     //微信接入
     public function checkSignature(Request $request)
@@ -133,6 +135,10 @@ class WxController extends Controller
 //                    echo "";
 //                    die;
                     switch ($data->Content){
+                        case '你好':
+                            $category=1;
+                            $content=$this->chinese();
+                            break;
                         case "天气":
                             $category=1;
                             $content=$this->weather1();
@@ -618,6 +624,32 @@ class WxController extends Controller
             echo $respones->getBody();
         }
     }
+    /**
+     * 汉字转拼音
+     */
+    public function chinese(){
+        $content='你好';
+        $data=file_get_contents('http://api.tianapi.com/txapi/pinyin/index?key='.env('WX_APIKEY').'&text='.$content.' ');//api接口
+        $json=json_decode($data,true);//将json解析成数组
+        if($json['code'] == 200){ //判断状态码
+            print_r($json); //打印数组
+        }else{
+            echo "返回错误，状态消息：".$json['msg'];
+        }
+        return $json;
+    }
+//    private function text($toUser,$fromUser,$content)
+//    {
+//        $template = "<xml>
+//                            <ToUserName><![CDATA[%s]]></ToUserName>
+//                            <FromUserName><![CDATA[%s]]></FromUserName>
+//                            <CreateTime>%s</CreateTime>
+//                            <MsgType><![CDATA[%s]]></MsgType>
+//                            <Content><![CDATA[%s]]></Content>
+//                            </xml>";
+//        $info = sprintf($template, $toUser, $fromUser, time(), 'text', $content);
+//        return $info;
+//    }
 
 
 
