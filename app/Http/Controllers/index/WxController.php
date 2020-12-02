@@ -638,7 +638,7 @@ class WxController extends Controller
         }
         $content="";
         foreach($json['newslist'] as $k=>$v){
-            $content=$json['pinyin'];
+            $content=$v['pinyin'];
         }
         Log::info('===='.$content);
         return $content;
