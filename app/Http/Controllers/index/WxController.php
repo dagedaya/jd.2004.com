@@ -518,7 +518,7 @@ class WxController extends Controller
                         [
                             'type'=>'view',
                             'name'=>'查询历史',
-                            'url'=>'http://jd.2004.com/history'
+                            'url'=>'https://www.baidu.com'
                         ],
                         [
                             'type'=>'view',
