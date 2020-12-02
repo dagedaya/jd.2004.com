@@ -631,11 +631,11 @@ class WxController extends Controller
         $content='你好';
         $data=file_get_contents('http://api.tianapi.com/txapi/pinyin/index?key='.env('WX_APIKEY').'&text='.$content.' ');//api接口
         $json=json_decode($data,true);//将json解析成数组
-        if($json['code'] == 200){ //判断状态码
-            print_r($json); //打印数组
-        }else{
-            echo "返回错误，状态消息：".$json['msg'];
-        }
+//        if($json['code'] == 200){ //判断状态码
+//            print_r($json); //打印数组
+//        }else{
+//            echo "返回错误，状态消息：".$json['msg'];
+//        }
         $content="";
         foreach($json['newslist'] as $k=>$v){
             $content=$v['pinyin'];
