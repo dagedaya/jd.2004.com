@@ -628,8 +628,8 @@ class WxController extends Controller
      * 汉字转拼音
      */
     public function chinese(){
-        $content='嘻嘻';
-        $data=file_get_contents('http://api.tianapi.com/txapi/pinyin/index?key='.env('WX_APIKEY').'&text='.$content.' ');//api接口
+        $text='嘻嘻';
+        $data=file_get_contents('http://api.tianapi.com/txapi/pinyin/index?key='.env('WX_APIKEY').'&text='.$text.' ');//api接口
         $json=json_decode($data,true);//将json解析成数组
 //        if($json['code'] == 200){ //判断状态码
 //            print_r($json); //打印数组
