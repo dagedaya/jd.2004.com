@@ -630,17 +630,17 @@ class WxController extends Controller
     public function chinese(){
         $content='你好';
         $data=file_get_contents('http://api.tianapi.com/txapi/pinyin/index?key='.env('WX_APIKEY').'&text='.$content.' ');//api接口
-        $json=json_decode($data,true);//将json解析成数组
+        $content=json_decode($data,true);//将json解析成数组
 //        if($json['code'] == 200){ //判断状态码
 //            print_r($json); //打印数组
 //        }else{
 //            echo "返回错误，状态消息：".$json['msg'];
 //        }
 //        dd($json['newslist']);
-        $content="";
-        foreach($json['newslist'] as $k=>$v){
-            $content=$v['pinyin'];
-        }
+//        $content="";
+//        foreach($json['newslist'] as $k=>$v){
+//            $content=$v['pinyin'];
+//        }
         return $content;
     }
 //    private function text($toUser,$fromUser,$content)
