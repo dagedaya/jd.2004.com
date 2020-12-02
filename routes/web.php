@@ -120,7 +120,7 @@ Route::get('/web_redirect','index\WxController@wxWebRedirect');
 //客服发送消息
 Route::post('/service','index\WxController@service');
 //汉字转拼音
-Route::get('/chinese','index\WxController@chinese');
+Route::math(['get','post'],'/chinese','index\WxController@chinese');
 
 
 
